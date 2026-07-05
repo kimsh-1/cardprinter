@@ -1,0 +1,101 @@
+{
+  "series_wordmark": "좋은소식 위클리",
+  "masthead_right": "GOOD NEWS",
+  "cards": [
+    {
+      "index": 1,
+      "type": "cover",
+      "archetype": "A1",
+      "kicker": "다들 힘들다고 했지만, 사실은 이런 일도 있었어요",
+      "headline": "그래도\n세상은\n나아지고\n있다",
+      "subhead": "잊고 지낸 좋은 소식들을 한자리에 모아봤어요"
+    },
+    {
+      "index": 2,
+      "type": "image",
+      "archetype": "A10",
+      "headline": "수십 년째 마을을 돌보는 어르신",
+      "body": "매일 아침 골목을 돌며 이웃 안부를 살피는 할머니예요",
+      "image_pattern": "G",
+      "bg": "assets/bg/card-02.png",
+      "source": "사진: 제공"
+    },
+    {
+      "index": 3,
+      "type": "image",
+      "archetype": "A10",
+      "headline": "폐플라스틱이 학용품 되다",
+      "body": "바닷가 플라스틱을 재생 원료로 바꿔 학용품을 만들었어요",
+      "image_pattern": "G",
+      "bg": "assets/bg/card-03.png",
+      "inset_portrait": {
+        "src": "assets/bg/card-02.png"
+      },
+      "source": "사진: 제공"
+    },
+    {
+      "index": 4,
+      "type": "body",
+      "archetype": "A3",
+      "body_mode": "dense",
+      "kicker": "희망 리포트",
+      "headline": "왜 지금, 희망을 말하는가",
+      "blocks": [
+        {
+          "kind": "para",
+          "text": "안 좋은 뉴스만 보다 보면 세상이 멈춘 것 같지만, 조용히 나아지는 일들도 분명 있어요."
+        },
+        {
+          "kind": "bullets",
+          "items": [
+            "기부·봉사 참여가 꾸준히 늘고 있어요",
+            "재생에너지 발전 비중이 커지고 있어요",
+            "동네마다 작은 회복의 이야기가 쌓이고 있어요",
+            "낯선 이웃끼리 돕는 일도 많아졌어요"
+          ]
+        },
+        {
+          "kind": "callout",
+          "label": "정리하면",
+          "text": "작지만 꾸준한 변화들이 여기저기서 이어지고 있어요"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "type": "image",
+      "archetype": "A10",
+      "headline": "은퇴 교사의 무료 교실",
+      "body": "형편이 어려운 아이들을 위해 마당에 작은 교실을 열었어요",
+      "image_pattern": "G",
+      "bg": "assets/bg/card-05.png",
+      "source": "사진: 제공"
+    },
+    {
+      "index": 6,
+      "type": "body",
+      "archetype": "A5",
+      "body_mode": "list",
+      "headline": "이번 상반기 좋은 소식들",
+      "body": "우산 고쳐 나누는 청년들\n다시 문 여는 동네 책방들\n작은 가게들의 협업 증가\n이웃 돕는 온라인 모임들"
+    },
+    {
+      "index": 7,
+      "type": "image",
+      "archetype": "A10",
+      "headline": "바다를 지키는 열아홉 살",
+      "body": "주말마다 해변을 청소하는 고등학생의 이야기예요",
+      "image_pattern": "G",
+      "bg": "assets/bg/card-07.png",
+      "source": "사진: 제공"
+    },
+    {
+      "index": 8,
+      "type": "cta",
+      "archetype": "A11",
+      "headline": "당신도\n함께해요",
+      "body": "작은 소식이지만 누군가에게는 오늘 하루를 버티는 힘이 될 수 있어요.",
+      "cta_label": "저장해두고 다시 보기"
+    }
+  ]
+}

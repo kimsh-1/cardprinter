@@ -1,0 +1,24 @@
+{
+  "_meta": "§4.12 비용·쿼터·모더레이션 SLA — 2026-07-04 Phase 0 동결(계정 오너 승인: codex 정액, 컷 수 상한으로만 제어)",
+  "per_carousel": {
+    "base_cuts_max": 16,
+    "base_cuts_note": "배경 ≤N + 컷아웃 ≤N (F/stat/quote/cta 면제분 제외 시 실제 ~10)",
+    "MAX_CUTS": 24,
+    "MAX_CUTS_rule": "ceil(base×1.5) — 초과 시 배치 중단·사람 검토",
+    "MAX_RETRY_per_cut": 2,
+    "retry_note": "완화 프롬프트(고유명사·인물·브랜드 제거) 1회 포함"
+  },
+  "runner_env": { "PARALLEL": "auto", "MAX": 15, "START": 3, "HARD_CAP": 32, "RAMP_EVERY": 5, "TIMEOUT": 240 },
+  "moderation_fallback": [
+    "1. rejected/no-image → 완화 프롬프트 1회 재투입",
+    "2. 재거부 → 해당 카드 F(타이포온리) 폴백 — G13-A는 분모 한정이라 통과(§4.12 안전판)"
+  ],
+  "draft_high_split": { "draft": "배경 1024x1536 표준", "high": "최종 컷아웃만 2048x2048 quality high" },
+  "cost": { "unit_price": "codex 정액 계정 — 단가 항목 비적용", "rate_limit": "429 감지 시 AutoScaler 워커 성장 정지(러너 내장)" },
+  "matte_stage": {
+    "_note": "PoC1 운영 발견(BUILD-LOG) — birefnet-general CLI는 WSL 7.7GB에서 OOM",
+    "engine": "scripts/imagegen/lowmem_matte.py (enable_cpu_mem_arena=False, intra 2스레드, peak ~6.7GB)",
+    "concurrency": "솔로 직렬 전용 — chrome 렌더·codex 스폰과 동시 실행 금지",
+    "env": { "NUMBA_CACHE_DIR": "$PROJ/.cache/numba (워밍 스텝 배치 선두)" }
+  }
+}

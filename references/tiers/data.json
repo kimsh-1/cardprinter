@@ -1,0 +1,147 @@
+{
+  "tier": "data",
+  "schema_version": "2.0",
+  "label": "뱅크샐러드형 데이터 리포트 — 딥 다크·비비드 캔디 액센트·3D 아이콘 무드",
+  "design_skill_ref": "design-linear",
+  "_wcag_note": "surface 3종 딥 다크 저채도(≤15%) ink/navy/warm 언더톤. ink 계열 bg 대비 ≥4.5·muted/faint ≥3 실측 통과(check_colors.mjs). accent(비비드 캔디 퍼플/그린/코랄)는 pill_bg/pill_ink ≥4.5 실측(퍼플은 어두운 on_acc 필요 — 백색은 4.23으로 미달 확인 후 배제).",
+  "surface_set": [
+    {
+      "id": "ink",
+      "bg": "#111213",
+      "ink": "#F5F6F8",
+      "ink_body": "#C8CBD1",
+      "ink_muted": "#8D9096",
+      "ink_faint": "#63656A",
+      "hairline": "#22242A",
+      "tint": "#191A1C",
+      "_from": "딥 뉴트럴 다크 — 리포트 기본 배경"
+    },
+    {
+      "id": "navy-ink",
+      "bg": "#12151C",
+      "ink": "#F3F5FA",
+      "ink_body": "#C6CAD6",
+      "ink_muted": "#8B8F9E",
+      "ink_faint": "#62656F",
+      "hairline": "#232733",
+      "tint": "#191C24",
+      "_from": "쿨 네이비 다크 — 핀테크 대시보드 언더톤"
+    },
+    {
+      "id": "warm-ink",
+      "bg": "#15120F",
+      "ink": "#F6F2EC",
+      "ink_body": "#CBC3B7",
+      "ink_muted": "#928A7C",
+      "ink_faint": "#69625A",
+      "hairline": "#26221C",
+      "tint": "#1C1815",
+      "_from": "웜 다크 — 3D 캔디 아이콘 부양용 스튜디오톤"
+    }
+  ],
+  "accent_set": [
+    {
+      "id": "candy-purple",
+      "acc": "#8C5CF5",
+      "on_acc": "#0E0A1F",
+      "hl": "#8C5CF5",
+      "hl_alpha": 0.4,
+      "pill_bg": "#8C5CF5",
+      "pill_ink": "#0E0A1F",
+      "_note": "비비드 캔디 퍼플, 다크잉크 4.59:1(백색 on_acc는 4.23 미달 확인·배제)"
+    },
+    {
+      "id": "candy-green",
+      "acc": "#3FD68A",
+      "on_acc": "#0A1F14",
+      "hl": "#3FD68A",
+      "hl_alpha": 0.4,
+      "pill_bg": "#3FD68A",
+      "pill_ink": "#0A1F14",
+      "_note": "비비드 캔디 그린, 다크잉크 9.19:1"
+    },
+    {
+      "id": "candy-coral",
+      "acc": "#FF6F8E",
+      "on_acc": "#2A0A12",
+      "hl": "#FF6F8E",
+      "hl_alpha": 0.4,
+      "pill_bg": "#FF6F8E",
+      "pill_ink": "#2A0A12",
+      "_note": "비비드 캔디 코랄, 다크잉크 6.88:1"
+    }
+  ],
+  "default_surface": "ink",
+  "default_accent": "candy-purple",
+  "fonts": {
+    "title": {
+      "family": "Do Hyeon",
+      "weight": 400,
+      "woff2": "assets/fonts/DoHyeon.woff2",
+      "license": "OFL"
+    },
+    "body": {
+      "family": "Pretendard",
+      "weight": 400,
+      "woff2": "assets/fonts/Pretendard-Regular.woff2",
+      "license": "OFL"
+    },
+    "accent": {
+      "family": "Pretendard",
+      "weight": 900,
+      "woff2": "assets/fonts/Pretendard-Black.woff2",
+      "license": "OFL"
+    }
+  },
+  "grid": {
+    "margin_px": 84,
+    "cols": 1,
+    "whitespace_ratio": "35-45%",
+    "safe_card_y": [120, 1230]
+  },
+  "radius_px": 16,
+  "typography": {
+    "title_px": [84, 124],
+    "body_px": [48, 56],
+    "l0_px": 28,
+    "l1_px": [72, 100],
+    "l2_px": [44, 50],
+    "l4_px": [30, 36],
+    "l5_px": [28, 32],
+    "line_height_title": 1.2,
+    "line_height_body": 1.55,
+    "letter_spacing_title": "-0.01em",
+    "letter_spacing_body": "-0.01em"
+  },
+  "d3": {
+    "acc_role": "emphasis-only",
+    "hl_alpha": 0.4,
+    "hl_cover": "50%",
+    "rule_hair_px": 1.5,
+    "rule_bold_px": 6,
+    "underline_bar_px": 8,
+    "pill_radius_px": 999,
+    "kicker_px": 28,
+    "kicker_weight": 700,
+    "block_gap_em": 1.0,
+    "ink_decay": ["100%", "80%", "60%", "50%"],
+    "emphasis_budget": 2,
+    "tier_max_layers": 5,
+    "_note": "데이터 리포트=고밀도 인포그래픽 허용, 3D 캔디 아이콘이 실질 강조 장치(D5 §8 뱅크샐러드 사례)"
+  },
+  "compose_mode": "3D 글로시 캔디 아이콘 그리드 + 딥다크 배경 + eyebrow/헤드라인 좌상단",
+  "image": {
+    "playbook": "C6 인포그래픽 / C7 카드뉴스(3D 클레이)",
+    "look": "L7 소프트 파스텔 변형(글로시 캔디)",
+    "sajo": "M3 멤피스 근사(데이터 놀이감)",
+    "bg_prompt_hint": "deep near-black studio backdrop, subtle vignette, soft ambient rim glow, negative space top-left for headline, no text",
+    "cutout_prompt_hint": "glossy 3D candy/jelly icon render, vivid saturated color, soft studio rim light, clean rounded form, no text"
+  },
+  "motion": {
+    "character": "말랑 데이터 팝",
+    "entrance": "scale-pop",
+    "emphasis": "counter|kenburns 3-5%",
+    "transition": "push|crossfade",
+    "pace": "lively"
+  }
+}

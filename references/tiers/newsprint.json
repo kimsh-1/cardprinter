@@ -1,0 +1,138 @@
+{
+  "tier": "newsprint",
+  "schema_version": "2.0",
+  "label": "굿굿굿 뉴스프린트 — 신문지 텍스처·마스트헤드·초대형 컨덴스드 포스터 헤드라인",
+  "design_skill_ref": "design-vercel",
+  "_wcag_note": "surface 3종 모두 무채색/저채도(≤6%) 신문지 그레이. ink 계열 bg 대비 ≥4.5(실측 paper 15.99/ash 14.57/white 17.93). ink_muted는 실측 gate(g06_contrast.py)가 폰트px<48이면 색 역할과 무관하게 무조건 median≥4.5를 요구(대형텍스트 3.0 예외는 px 기준, 색상 라벨 기준 아님) — 이를 반영해 paper 5.70/ash 5.70/white 6.19로 재조정(2026-07-05, 텍스트 슬롯이 대개 26~38px). ink_faint(paper 3.99/ash 3.91/white 4.41)는 ≥48px 대형 장식용으로만 사용, data-slot(G6 실측 대상) 소형 텍스트에는 미사용 — build_carousel.mjs .np-credit이 ink_faint 대신 ink_muted를 쓰는 이유. accent(잉크네이비/포레스트그린)는 pill_bg/pill_ink ≥4.5 실측(11.27/5.32), 헤드라인 핵심어에만 절제 사용 — 원본 실물(goodgoodgoodco)은 무채색 단독, accent는 card-shorts 시스템 요구(kicker pill/hairline) 충족을 위한 최소 개입.",
+  "surface_set": [
+    {
+      "id": "paper",
+      "bg": "#EEEDE9",
+      "ink": "#121212",
+      "ink_body": "#3C3A36",
+      "ink_muted": "#5F5C54",
+      "ink_faint": "#77746B",
+      "hairline": "#DAD7CE",
+      "tint": "#E6E4DC",
+      "_from": "goodgoodgoodco 연회색 신문지 캔버스(기본)"
+    },
+    {
+      "id": "ash",
+      "bg": "#E4E3DD",
+      "ink": "#121212",
+      "ink_body": "#3C3A36",
+      "ink_muted": "#59564E",
+      "ink_faint": "#726F66",
+      "hairline": "#D2CFC5",
+      "tint": "#DAD8D0",
+      "_from": "약간 더 짙은 재생지 톤 — 본문 기사카드 변주용"
+    },
+    {
+      "id": "white",
+      "bg": "#FAFAF8",
+      "ink": "#121212",
+      "ink_body": "#3C3A36",
+      "ink_muted": "#615E56",
+      "ink_faint": "#78756C",
+      "hairline": "#E5E3DC",
+      "tint": "#F0EFEA",
+      "_from": "밝은 대안 — 저조도 사진 카드에서 대비 여유 필요할 때"
+    }
+  ],
+  "accent_set": [
+    {
+      "id": "ink-navy",
+      "acc": "#1B3A6B",
+      "on_acc": "#FFFFFF",
+      "hl": "#1B3A6B",
+      "hl_alpha": 0.28,
+      "pill_bg": "#1B3A6B",
+      "pill_ink": "#FFFFFF",
+      "_note": "잉크블루, 백색 11.27:1 실측"
+    },
+    {
+      "id": "forest-green",
+      "acc": "#1F7A4D",
+      "on_acc": "#FFFFFF",
+      "hl": "#1F7A4D",
+      "hl_alpha": 0.28,
+      "pill_bg": "#1F7A4D",
+      "pill_ink": "#FFFFFF",
+      "_note": "딥그린, 백색 5.32:1 실측"
+    }
+  ],
+  "default_surface": "paper",
+  "default_accent": "ink-navy",
+  "fonts": {
+    "title": {
+      "family": "Black Han Sans",
+      "weight": 400,
+      "woff2": "assets/fonts/BlackHanSans.woff2",
+      "license": "OFL",
+      "_note": "실블랙웨이트 단일 페이스 — 자간 압축(letter_spacing_title -0.03em·tier override -0.045em)으로 컨덴스드 포스터 느낌 근사. 전용 컨덴스드 서체 미번들."
+    },
+    "body": {
+      "family": "Pretendard",
+      "weight": 400,
+      "woff2": "assets/fonts/Pretendard-Regular.woff2",
+      "license": "OFL"
+    },
+    "accent": {
+      "family": "Pretendard",
+      "weight": 700,
+      "woff2": "assets/fonts/Pretendard-Bold.woff2",
+      "license": "OFL"
+    }
+  },
+  "grid": {
+    "margin_px": 96,
+    "cols": 1,
+    "whitespace_ratio": "25-35%",
+    "safe_card_y": [120, 1230]
+  },
+  "radius_px": 0,
+  "typography": {
+    "title_px": [96, 128],
+    "body_px": [46, 54],
+    "l0_px": 26,
+    "l1_px": [78, 96],
+    "l2_px": [44, 50],
+    "l4_px": [30, 36],
+    "l5_px": [26, 30],
+    "line_height_title": 1.08,
+    "line_height_body": 1.55,
+    "letter_spacing_title": "-0.03em",
+    "letter_spacing_body": "-0.005em"
+  },
+  "d3": {
+    "acc_role": "emphasis-only",
+    "hl_alpha": 0.28,
+    "hl_cover": "40%",
+    "rule_hair_px": 1.5,
+    "rule_bold_px": 2.5,
+    "underline_bar_px": 6,
+    "pill_radius_px": 0,
+    "kicker_px": 34,
+    "kicker_weight": 800,
+    "block_gap_em": 1.0,
+    "ink_decay": ["100%", "80%", "60%", "50%"],
+    "emphasis_budget": 1,
+    "tier_max_layers": 4,
+    "_note": "무채색 지면감 우선 — 강조예산 1(절제), pill_radius 0(칩 대신 각진 라벨/마스트헤드 워드마크), hl_alpha 0.28(형광펜 아님, 은은한 잉크 밑줄 정도)"
+  },
+  "compose_mode": "신문지 텍스처 캔버스 + 상단 hairline 마스트헤드(좌우 워드마크) — 커버는 킥커+초대형 컨덴스드 헤드라인(3~4줄)+데크+하단 hairline 포스터, 본문은 상단 55% 사진블록(직각 모서리, 선택적 원형 인셋)+좌정렬 헤드라인+데크+우하단 포토크레딧 기사카드",
+  "image": {
+    "playbook": "C1 시사 커버 / C6 인포그래픽",
+    "look": "L4 스위스 타이포 변형 — 다큐멘터리 포토저널리즘",
+    "sajo": "M1 바우하우스 근사(그리드 팩트카드)",
+    "bg_prompt_hint": "documentary photojournalism photograph, natural available light, candid real-world scene, straight edges no vignette, no text anywhere",
+    "cutout_prompt_hint": "small circular portrait headshot, plain neutral backdrop, photojournalism style, no text"
+  },
+  "motion": {
+    "character": "신문 지면 넘김",
+    "entrance": "hard-cut",
+    "emphasis": "none",
+    "transition": "hard-cut",
+    "pace": "steady"
+  }
+}

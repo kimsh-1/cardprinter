@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "measure.json — Tier-2 렌더 실측 overflow 판정 계약 (REDESIGN-PLAN §5.2, Phase 0 동결)",
+  "description": "scripts/render/measure.mjs(Playwright)가 방출, paginate.mjs 재실행이 소비. overflow_count>0 → n_body_final += suggested_extra_cards → 재밀도웨이브(밸리 고정) → 재측정, 최대 2회.",
+  "type": "object",
+  "required": ["profile", "content_box", "cards", "overflow_count", "suggested_extra_cards"],
+  "properties": {
+    "profile": { "enum": ["4:5", "1:1", "9:16"] },
+    "content_box": { "type": "array", "items": { "type": "number" }, "minItems": 2, "maxItems": 2 },
+    "cards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["index", "arch", "used_px", "avail_px", "overflow"],
+        "properties": {
+          "index": { "type": "integer", "minimum": 1 },
+          "arch": { "type": "string", "pattern": "^A([1-9]|1[0-4])$" },
+          "used_px": { "type": "number" },
+          "avail_px": { "type": "number" },
+          "overflow": { "type": "boolean" },
+          "split": {
+            "type": ["object", "null"],
+            "properties": {
+              "keep_blocks": { "type": "array", "items": { "type": "integer" } },
+              "overflow_blocks": { "type": "array", "items": { "type": "integer" } },
+              "split_at_line": { "type": "integer" },
+              "line_h": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "overflow_count": { "type": "integer", "minimum": 0 },
+    "suggested_extra_cards": { "type": "integer", "minimum": 0 }
+  }
+}

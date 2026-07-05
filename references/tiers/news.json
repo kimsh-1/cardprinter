@@ -1,0 +1,147 @@
+{
+  "tier": "news",
+  "schema_version": "2.0",
+  "label": "뉴닉형 시사 — 형광펜 밴드·크림 페이퍼·팩트 브리핑",
+  "design_skill_ref": "design-notion",
+  "_wcag_note": "surface 3종 모두 백색/크림/포그 저채도(≤15%), ink 계열은 bg 대비 ≥4.5·muted/faint ≥3 실측 통과(check_colors.mjs). accent(형광 오렌지 계열)는 pill_bg/pill_ink ≥4.5 실측.",
+  "surface_set": [
+    {
+      "id": "white",
+      "bg": "#FFFFFF",
+      "ink": "#111111",
+      "ink_body": "#3A3A3A",
+      "ink_muted": "#4F4F4F",
+      "ink_faint": "#939393",
+      "hairline": "#EBEBEB",
+      "tint": "#F5F5F5",
+      "_from": "뉴닉 순백 표지 배경"
+    },
+    {
+      "id": "cream",
+      "bg": "#FBF6EC",
+      "ink": "#1E1A12",
+      "ink_body": "#4A4033",
+      "ink_muted": "#574E40",
+      "ink_faint": "#948870",
+      "hairline": "#EFE6D3",
+      "tint": "#F5EEE0",
+      "_from": "밝은 크림 페이퍼(뉴스레터 지면감)"
+    },
+    {
+      "id": "fog",
+      "bg": "#F3F1EC",
+      "ink": "#17140F",
+      "ink_body": "#3D3830",
+      "ink_muted": "#514B40",
+      "ink_faint": "#8F887A",
+      "hairline": "#E8E4DA",
+      "tint": "#EDE9DE",
+      "_from": "옅은 웜그레이 — 본문 카드용 중간톤"
+    }
+  ],
+  "accent_set": [
+    {
+      "id": "marker-orange",
+      "acc": "#FF6A00",
+      "on_acc": "#171117",
+      "hl": "#FF6A00",
+      "hl_alpha": 0.55,
+      "pill_bg": "#FF6A00",
+      "pill_ink": "#171117",
+      "_note": "뉴닉 시그니처 형광오렌지, 흑색 6.48:1 실측"
+    },
+    {
+      "id": "sunrise-amber",
+      "acc": "#FFB100",
+      "on_acc": "#171117",
+      "hl": "#FFB100",
+      "hl_alpha": 0.55,
+      "pill_bg": "#FFB100",
+      "pill_ink": "#171117",
+      "_note": "밝은 옐로오렌지, 흑색 10.22:1"
+    },
+    {
+      "id": "signal-red-orange",
+      "acc": "#C4331B",
+      "on_acc": "#FFFFFF",
+      "hl": "#C4331B",
+      "hl_alpha": 0.45,
+      "pill_bg": "#C4331B",
+      "pill_ink": "#FFFFFF",
+      "_note": "속보/경고 톤 딥레드오렌지, 백색 5.47:1"
+    }
+  ],
+  "default_surface": "white",
+  "default_accent": "marker-orange",
+  "fonts": {
+    "title": {
+      "family": "Black Han Sans",
+      "weight": 400,
+      "woff2": "assets/fonts/BlackHanSans.woff2",
+      "license": "OFL"
+    },
+    "body": {
+      "family": "Pretendard",
+      "weight": 400,
+      "woff2": "assets/fonts/Pretendard-Regular.woff2",
+      "license": "OFL"
+    },
+    "accent": {
+      "family": "Pretendard",
+      "weight": 700,
+      "woff2": "assets/fonts/Pretendard-Bold.woff2",
+      "license": "OFL"
+    }
+  },
+  "grid": {
+    "margin_px": 84,
+    "cols": 1,
+    "whitespace_ratio": "30-40%",
+    "safe_card_y": [120, 1230]
+  },
+  "radius_px": 12,
+  "typography": {
+    "title_px": [88, 128],
+    "body_px": [48, 56],
+    "l0_px": 28,
+    "l1_px": [72, 100],
+    "l2_px": [44, 50],
+    "l4_px": [30, 36],
+    "l5_px": [28, 32],
+    "line_height_title": 1.25,
+    "line_height_body": 1.6,
+    "letter_spacing_title": "-0.01em",
+    "letter_spacing_body": "-0.01em"
+  },
+  "d3": {
+    "acc_role": "emphasis-only",
+    "hl_alpha": 0.55,
+    "hl_cover": "58%",
+    "rule_hair_px": 1.5,
+    "rule_bold_px": 6,
+    "underline_bar_px": 8,
+    "pill_radius_px": 999,
+    "kicker_px": 28,
+    "kicker_weight": 700,
+    "block_gap_em": 1.0,
+    "ink_decay": ["100%", "80%", "60%", "50%"],
+    "emphasis_budget": 2,
+    "tier_max_layers": 5,
+    "_note": "형광펜 밴드=hl_alpha 0.55(D5 §1 '뉴스=형광펜 필기'), hairline 구분선(뉴닉 표지 관용구), eyebrow pill 필수"
+  },
+  "compose_mode": "채도 죽인 사진 배경(선택) + 형광오렌지 밴드/하이라이트 헤드라인, eyebrow pill 상단 고정",
+  "image": {
+    "playbook": "C6 인포그래픽 / C1 시사 커버",
+    "look": "L4 스위스 타이포 변형(뉴스 훅)",
+    "sajo": "M1 바우하우스 근사(그리드 팩트카드)",
+    "bg_prompt_hint": "desaturated documentary photo background, muted grayscale tone, empty band top third for orange headline highlight, no text",
+    "cutout_prompt_hint": "small flat icon or emoji-style sticker accent, clean edges, no text"
+  },
+  "motion": {
+    "character": "속보 리듬",
+    "entrance": "slide-up",
+    "emphasis": "hl-pen-sweep",
+    "transition": "hard-cut",
+    "pace": "brisk"
+  }
+}

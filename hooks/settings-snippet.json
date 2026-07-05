@@ -1,0 +1,16 @@
+{
+  "_comment": "card-shorts 하드게이트 자동강제 — Claude Code settings.json의 hooks에 병합. 계약 파일 저장 시 게이트 실행, 실패 시 exit 2로 차단.",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /ABSOLUTE/PATH/TO/cardprinter/hooks/gate_hook.mjs"
+          }
+        ]
+      }
+    ]
+  }
+}

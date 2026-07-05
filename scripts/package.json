@@ -1,0 +1,11 @@
+{
+  "name": "cardprinter-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Render + gate toolchain for CardPrinter (carousel HTML->PNG, echarts SSR charts, 9:16 reels).",
+  "dependencies": {
+    "puppeteer-core": "^23.11.1",
+    "echarts": "^6.1.0"
+  }
+}

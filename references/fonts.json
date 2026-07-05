@@ -1,0 +1,196 @@
+{
+  "meta": {
+    "axis": "R3 상업적 무료 한글 폰트·타이포",
+    "date": "2026-07-04",
+    "note": "Pretendard woff2는 이미 로컬 확보($HOME/.fonts/pretendard-pkg/web/static/woff2/). 아래는 톤별 추가 폰트. video_embed_ok=true인 것만 렌더 파이프라인 임베드 권장.",
+    "license_safe_count": 11,
+    "safest_class": "SIL OFL (판매 외 무제한 상업·영상·임베드·재배포 허용)"
+  },
+  "fonts": [
+    {
+      "name": "Pretendard",
+      "weights": ["Thin 100","ExtraLight 200","Light 300","Regular 400","Medium 500","SemiBold 600","Bold 700","ExtraBold 800","Black 900"],
+      "role": "base sans (본문/공용)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "LOCAL: $HOME/.fonts/pretendard-pkg/web/static/woff2/Pretendard-*.woff2 | CDN: https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/woff2/Pretendard-Bold.woff2 | Variable: https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/variable/woff2/PretendardVariable.woff2",
+      "source_page": "https://github.com/orioncactus/pretendard"
+    },
+    {
+      "name": "Noto Serif KR (본명조)",
+      "weights": ["Regular 400","SemiBold 600","Bold 700","Black 900"],
+      "role": "luxury title serif",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700;900&display=swap (CSS가 gstatic .woff2 서브셋 반환). 직접예시: https://fonts.gstatic.com/s/notoserifkr/v31/3Jn7SDn90Gmq2mr3blnHaTZXduUBwuF9Wxop-KlAZIoTrf6uFZh_9Q.0.woff2",
+      "source_page": "https://fonts.google.com/noto/specimen/Noto+Serif+KR"
+    },
+    {
+      "name": "Nanum Myeongjo (나눔명조)",
+      "weights": ["Regular 400","Bold 700","ExtraBold 800"],
+      "role": "luxury title serif (alt, 얇고 클래식)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap | 직접예시: https://fonts.gstatic.com/s/nanummyeongjo/v31/9Btx3DZF0dXLMZlywRbVRNhxy1LuEGI-gZ_Ll9dMHVruCTvHYAnNT2g.0.woff2",
+      "source_page": "https://fonts.google.com/specimen/Nanum+Myeongjo"
+    },
+    {
+      "name": "Hahmlet (함렛)",
+      "weights": ["Regular 400","Bold 700","Black 900"],
+      "role": "luxury title serif (alt, 고대비 에디토리얼)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;700;900&display=swap",
+      "source_page": "https://fonts.google.com/specimen/Hahmlet"
+    },
+    {
+      "name": "Gmarket Sans (G마켓 산스)",
+      "weights": ["Light 300","Medium 500","Bold 700"],
+      "role": "brand BI 기하 산스 title",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "공식은 TTF/OTF만: https://corp.gmarket.com/fonts/GmarketSansTTF.zip , https://corp.gmarket.com/fonts/GmarketSansOTF.zip (woff2 필요시 로컬 변환). CDN webfont: https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff",
+      "source_page": "https://corp.gmarket.com/fonts/"
+    },
+    {
+      "name": "Jua (주아체)",
+      "weights": ["Regular 400"],
+      "role": "character 둥근 산스 title (귀여움/친근)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Jua&display=swap | 직접예시: https://fonts.gstatic.com/s/jua/v18/co3KmW9ljjAjdojPCM3T3NGswha8jSmuzy4jzT-N.2.woff2",
+      "source_page": "https://fonts.google.com/specimen/Jua"
+    },
+    {
+      "name": "Gowun Dodum (고운돋움)",
+      "weights": ["Regular 400"],
+      "role": "character 부드러운 산스 body (귀엽지만 가독성)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap | 직접예시: https://fonts.gstatic.com/s/gowundodum/v12/3Jn5SD_00GqwlBnWc1TUJF0AFPJJ3oAcQhA685dKXogXvvOvaew.0.woff2",
+      "source_page": "https://fonts.google.com/specimen/Gowun+Dodum"
+    },
+    {
+      "name": "Gowun Batang (고운바탕)",
+      "weights": ["Regular 400","Bold 700"],
+      "role": "soft serif body (귀여운+감성)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap",
+      "source_page": "https://fonts.google.com/specimen/Gowun+Batang"
+    },
+    {
+      "name": "Gaegu (개구체)",
+      "weights": ["Regular 400","Bold 700"],
+      "role": "character 손글씨 accent",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap",
+      "source_page": "https://fonts.google.com/specimen/Gaegu"
+    },
+    {
+      "name": "Black Han Sans (검은고딕)",
+      "weights": ["Regular 900(초굵)"],
+      "role": "임팩트 헤드라인 (쇼츠 훅 타이틀)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap",
+      "source_page": "https://fonts.google.com/specimen/Black+Han+Sans"
+    },
+    {
+      "name": "Do Hyeon (도현체)",
+      "weights": ["Regular 400(굵은 고딕)"],
+      "role": "굵은 캐주얼 타이틀 (brand/character 중간)",
+      "license": "SIL OFL 1.1",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap",
+      "source_page": "https://fonts.google.com/specimen/Do+Hyeon"
+    },
+    {
+      "name": "S-Core Dream (에스코어드림)",
+      "weights": ["1 Thin ~ 9 Black (9종)"],
+      "role": "base sans alt (무게 스펙트럼 넓음)",
+      "license": "S-Core 자체 무료 라이선스 (상업 사용·재배포 허용, 폰트 유료판매 금지). OFL 아님 → 안전등급 중간",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "공식 OTF: https://s-core.co.kr/company/font/ (woff2 필요시 변환)",
+      "source_page": "https://s-core.co.kr/company/font/"
+    },
+    {
+      "name": "Cafe24 Surround/Anemone (카페24 써라운드/아네모네)",
+      "weights": ["Surround: Regular/Bold/Air","Anemone: Regular"],
+      "role": "친근 고딕 (character/brand)",
+      "license": "SIL OFL 1.1 (공식 FAQ: 영상/자막·CI/BI·번들/임베드 명시 허용)",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "공식 다운로드: https://fonts.cafe24.com/ | webfont css: https://webfont.cafe24.com/pc/css/cafe24.css",
+      "source_page": "https://help.cafe24.com/faq/web-hosting/introduce/new-renewal-change/cafe24_free_fonts_usage"
+    },
+    {
+      "name": "여기어때 잘난체 (Jalnan/Jalnan Gothic)",
+      "weights": ["잘난체","잘난체2","잘난체 고딕"],
+      "role": "임팩트/귀여운 헤드라인 (character title, alt)",
+      "license": "여기어때컴퍼니 자체 라이선스 — 상업 사용 무료·영상 허용, 단 폰트 파일 재배포 금지. OFL 아님 → 렌더 서버에 woff2 번들 배포 시 주의",
+      "commercial_ok": true,
+      "video_embed_ok": true,
+      "woff2_url": "공식: https://gccompany.co.kr/font (웹폰트 제공). 재배포 금지라 CDN 링크 임베드 권장",
+      "source_page": "https://noonnu.cc/font_page/115"
+    }
+  ],
+  "pairings": {
+    "luxury": {
+      "title": "Noto Serif KR (본명조) 700/900",
+      "body": "Pretendard 400/500",
+      "alt_title": "Nanum Myeongjo 800 또는 Hahmlet 900",
+      "note": "세리프 타이틀 + 산스 본문. 큰 자간(-1~-2%)·넉넉한 여백으로 프리미엄. 골드/딥네이비 톤과 궁합."
+    },
+    "character": {
+      "title": "Jua (주아) 또는 여기어때 잘난체",
+      "body": "Gowun Dodum",
+      "accent": "Gaegu (손글씨 말풍선·강조)",
+      "note": "둥근 산스 타이틀 + 부드러운 본문. 파스텔·굵은 아웃라인과 궁합. 잘난체는 재배포금지라 번들 대신 CDN."
+    },
+    "brand": {
+      "title": "Gmarket Sans (G마켓 산스) Bold",
+      "body": "Pretendard 400/500",
+      "alt_title": "Do Hyeon 또는 Pretendard 800",
+      "note": "기하학 산스 미니멀. 단색+강한 대비, tabular 숫자. 로고감 있는 꽉 찬 네모틀."
+    },
+    "impact_shorts": {
+      "title": "Black Han Sans (검은고딕) 또는 여기어때 잘난체",
+      "body": "Pretendard 700",
+      "note": "쇼츠 훅/자막 초굵 헤드라인. 세이프존 내 큰 글자."
+    }
+  },
+  "typography": {
+    "canvas": "1080px width 기준 (카드뉴스/쇼츠 세로 1080x1350 or 1080x1920)",
+    "min_font_px": 42,
+    "min_font_px_note": "1080폭에서 본문 최소 42px(모바일 가독 하한). 타이틀 72~140px, 부제 48~60px, 캡션/출처 30~34px 하한.",
+    "body_font_px_recommended": "48-56",
+    "title_font_px_recommended": "84-140",
+    "letter_spacing": {
+      "title_sans": "-0.02em ~ -0.03em (굵은 헤드라인은 살짝 좁게)",
+      "title_serif": "-0.01em ~ 0em",
+      "body": "-0.01em ~ 0em",
+      "caption_small": "0em ~ +0.01em (작은 글자는 자간 벌려 가독)"
+    },
+    "line_height": {
+      "title": "1.15 ~ 1.25",
+      "body": "1.5 ~ 1.7",
+      "body_note": "한글 본문은 1.6 전후가 가독 최적. 줄당 16~24자 이내로 개행."
+    },
+    "contrast": "본문 대비 WCAG AA 4.5:1 이상. 이미지 위 텍스트는 40~60% 딤/그라데이션 오버레이 또는 텍스트 섀도로 보장.",
+    "safezone_note": "쇼츠(1080x1920)는 상/하 각 12~15% UI 세이프존 제외한 중앙에 핵심 텍스트 배치 (R2 축 참조)."
+  }
+}

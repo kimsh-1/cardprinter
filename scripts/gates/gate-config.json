@@ -1,0 +1,154 @@
+{
+  "_note": "게이트 임계값 — criteria.md와 동기화. 값 변경 시 criteria.md·decision-log도 갱신. v2.0: REDESIGN-PLAN Phase 0 계약 동결(2026-07-04) — valid_types 확장·archetype 병행 필드·G13~G17 블록·enforce 정책(§8.5) 추가. 기존 G1~G12 임계 불변.",
+  "schema_version": "2.0",
+  "copy": {
+    "headline_max": 24,
+    "subhead_max": 34,
+    "cta_headline_max": 14,
+    "body_max": 90,
+    "line_max": 18,
+    "card_count_default": 8,
+    "card_count_min": 4,
+    "card_count_max": 20,
+    "required_types_any": ["cover", "cta"],
+    "valid_types": ["cover", "hook", "body", "stat", "quote", "comparison", "timeline", "cta", "source", "toc", "image"],
+    "fixed_slots": { "first_type": "cover", "last_type": "cta" },
+    "card_count_predict_tolerance": 1
+  },
+  "archetype": {
+    "_note": "O1 확정 — 경로 2(archetype 필드 병행, §8.4). type 9종(+toc/image) 유지, card.archetype + discriminant로 route() total function화. S2 카피가 반드시 채움(G16·G15 입력).",
+    "field": "archetype",
+    "values": ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "A14"],
+    "discriminants": {
+      "viz_kind": { "on_type": "stat", "values": ["number", "chart"], "map": { "number": "A4", "chart": "A14" } },
+      "body_mode": { "on_type": "body", "values": ["dense", "list", "qa", "bridge", "comic"],
+                     "map": { "dense": "A3", "list": "A5", "qa": "A9", "bridge": "A12", "comic": "A13" } }
+    },
+    "type_map": { "cover": "A1", "toc": "A2", "quote": "A6", "comparison": "A7", "timeline": "A8",
+                  "image": "A10", "cta": "A11", "hook": "A12" },
+    "source_rule": "source는 독립 카드 아님 — dense L5 슬롯으로 흡수(§8.4)"
+  },
+  "brief": {
+    "_note": "O3 확정 — genre 산출자 = S1 기획(§7.7). 미지정 시 G17 파이프라인 abort(하드 블로커).",
+    "genre_required": true,
+    "genres": ["news", "knowledge", "fintech_data", "lifestyle", "global_value"]
+  },
+  "png": {
+    "ratios": { "4:5": [1080, 1350], "1:1": [1080, 1080] },
+    "default_ratio": "4:5"
+  },
+  "video": { "width": 1080, "height": 1920, "fps": 30, "codec": "h264" },
+  "safe_zone": {
+    "_note": "O4 확정 — 표준 4:5 1080×1350 유일, 9:16은 파생 프로파일(§2.6). 세이프존은 텍스트 슬롯만(G11') — 컷아웃은 블리드 허용, cutouts.json으로 분리 방출.",
+    "carousel_4_5": { "x": [90, 990], "y": [96, 1254] },
+    "shorts_9_16": { "x": [90, 950], "y": [220, 1520] },
+    "caption_band_9_16": { "y": [1056, 1497], "never_below_y": 1500 }
+  },
+  "contrast": {
+    "normal_min": 4.5, "large_min": 3.0, "large_px_threshold": 48,
+    "g6plus": {
+      "_note": "§4.9① 대비-퍼센타일 하드닝 + ② occlusion. 의존성/입력 결손 = exit 1(fail-closed, exit 2 금지).",
+      "median_min": 4.5, "p10_min": 3.0,
+      "occlusion_max_ratio": 0.08, "occlusion_enforce": "warn",
+      "remediation": { "max_attempts": 3, "lever_order": ["scrim", "overlay55", "text-shadow+blurbox"], "early_stop_delta": 0.05 }
+    }
+  },
+  "image": {
+    "_note": "G13 (§4.11 G13-A 래스터 플로어 + §7.3 G13-B 패턴 존재·다양성) — 두 서브검사 중 하나라도 exit 1이면 G13 FAIL.",
+    "valid_patterns": ["A", "B", "C", "D", "E", "F", "G"],
+    "g13a": {
+      "floor_ratio": 0.5,
+      "floor_ratio_enforce": "warn",
+      "eligible_patterns": ["A", "B", "C", "G"],
+      "exempt_note": "분모 = 이미지 허용 패턴 카드만. F(stat/quote/cta/bridge)·순수 D/E 면제. N_elig==0이면 (b) 면제하되 G13-B 다양성은 강제.",
+      "cover_requires_raster": true,
+      "manifest_gen_must_exist": true,
+      "raster_definition": "실 PNG 파일(bg|cutout)만 분자 카운트 — SVG/블롭은 G13-B 패턴 존재로만 인정"
+    },
+    "g13b": {
+      "distinct_min_ratio": 0.333,
+      "typo_only_max_ratio": 0.5,
+      "max_consecutive_same": 2,
+      "scrim_required_for": ["A"],
+      "one_pattern_per_card": true,
+      "_note": "max_consecutive_same은 이미지 패턴 축(A~G) — 아키타입 연속(run≤3, diversity 블록)과 별개 축"
+    }
+  },
+  "typo_floor": {
+    "_note": "G14 (§7.4 통일표 = 단일 진실원). body/subhead 하드 fail선은 abs_floor 37 하나(warn=comfortable). 표지·빅넘버는 min 자체가 하드. 미등록 slot·필수 slot 누락 = FAIL(fail-closed).",
+    "slot_vocab": ["headline", "bignum", "subhead", "body", "caption", "source", "kicker", "supplement", "cta-pill", "dispnum", "chart"],
+    "*.supplement": { "hard": 24, "warn": 30, "max": 36 },
+    "*.dispnum": { "hard": 100, "warn": 140, "max": 340 },
+    "_vocab_note": "supplement(dense L4)·cta-pill은 §3.3/§3.5 S5 템플릿 방출 슬롯 — §7.4 표에 없어 vocab 확장(fail-closed 유지, Phase 1 정합 보정). cta-pill은 px 하한 미적용(장치).",
+    "required_slots": { "cover": ["headline"], "stat": ["bignum"], "body": ["headline", "body"], "hook": ["headline"] },
+    "cover.headline": { "hard": 160, "warn": 160, "max": 300 },
+    "stat.bignum": { "hard": 240, "warn": 400, "max": 650 },
+    "body.headline": { "hard": 80, "warn": 80, "max": 120 },
+    "*.subhead": { "hard": 37, "warn": 46, "max": 60 },
+    "body.dense": { "density": ["A3", "A7", "A14"], "hard": 37, "warn": 44, "max": 48 },
+    "body.single": { "hard": 37, "warn": 52, "max": 72 },
+    "*.caption": { "hard": 24, "warn": 38, "max": 48 },
+    "*.source": { "hard": 24, "warn": 28, "max": 36 },
+    "hierarchy_ratio_min": 1.45,
+    "enforce": "hard",
+    "_enforce_note": "abs_floor 37·cover 160·bignum 400은 외부 표준 근거 충분(§8.5) — 착수부터 하드"
+  },
+  "hierarchy": {
+    "_note": "G15 (§7.5). 익스포터 확장 필요: slots.json에 font_weight·emph 추가.",
+    "tier_layers": { "high": [3, 5], "mid": [2, 3], "low": [1, 2] },
+    "high_archetypes": ["A3", "A7", "A14"],
+    "low_archetypes": ["A1", "A6", "A10", "A11", "A12"],
+    "tier_contrast_axes_min": 2, "tier_contrast_size_ratio": 1.4, "tier_contrast_weight_delta": 200, "tier_contrast_fg_cr_min": 1.2,
+    "emphasis_budget": 2, "accent_max_per_card": 1,
+    "accent_max_exceptions": { "A7": 2, "A14": 3 },
+    "_exceptions_note": "§2.2 확정 예외(A7 양진영·A14 색코딩)를 §7.5 법칙5와 정합 — routing.json accent_colors와 동일값",
+    "source_no_emphasis": true,
+    "enforce": "hard",
+    "_enforce_note": "지각 3단계·1.4x/Δ200은 문헌 근거 강함(§8.5) — 하드 유지"
+  },
+  "diversity": {
+    "_note": "G16 (§7.6). 입력: copy.json cards[].archetype.",
+    "distinct_min_ratio": 0.4, "shannon_norm_min": 0.60, "max_consecutive_same": 3,
+    "cover_archetype": "A1", "close_archetypes": ["A11"],
+    "high_density": ["A3", "A7", "A14"], "low_density": ["A4", "A6", "A10", "A12"],
+    "wave_valley_extra": ["A11"], "wave_tail_exempt": 2, "wave_run_max": 4, "wave_valley_within": 3,
+    "enforce": "warn",
+    "_enforce_note": "0.60·0.35·run≤3은 수렴 도출값 — 파일럿 캘리브레이션 전 WARN(exit2), 실측 후 하드 승격(§8.5). 고정슬롯(법칙3)은 fixed_slots로 착수부터 하드."
+  },
+  "fill": {
+    "_note": "G18 (감사 ★2·★4 — 세로점유·죽은공간, 2026-07-05 신설). 콘텐츠 세그먼트(slots+cutout+상단분할bg) 병합 → span·최대갭 판정. 풀블리드 bg 카드 면제, 저밀도 밸리 type(quote/hook/cover/cta)은 apply_types 제외로 면제. v1 임계 = 파일럿 캘리브레이션값.",
+    "apply_types": ["toc", "body", "stat", "timeline", "list", "image", "comparison"],
+    "span_min_ratio": 0.70,
+    "max_gap_ratio": 0.35,
+    "bg_top_px": 520,
+    "enforce": "hard"
+  },
+  "render_diversity": {
+    "_note": "G19 (감사 ★1·★3 — 라벨≠실렌더 봉쇄, 2026-07-05 신설). expected = archetype→렌더 slots 구조 계약. 라벨만 그럴싸하고 DOM이 renderDense 붕괴면 여기서 FAIL. A14 차트는 전용 조판 미구현 — 사용 시 정직하게 FAIL(백로그).",
+    "distinct_fp_min": 5,
+    "expected": {
+      "A2": { "slot": "subhead", "min_count": 3 },
+      "A4": { "any_slot": ["bignum", "dispnum"] },
+      "A5": { "slot": "body", "min_count": 3 },
+      "A7": { "slot": "headline", "min_count": 2 },
+      "A8": { "slot": "body", "min_count": 3 },
+      "A11": { "any_slot": ["cta-pill"] },
+      "A14": { "any_slot": ["chart", "bignum", "dispnum"] }
+    },
+    "enforce": "hard"
+  },
+  "judge": {
+    "_note": "G17 (§7.7). L1(G13~G16) 통과분만 진입. brief.genre + tier → ref-anchors.json 서브셋 라우팅.",
+    "axes": ["image", "typo", "hierarchy", "diversity", "signature"],
+    "pass": { "min_axis": 3, "sum_min": 17 },
+    "warn": { "min_axis": 2, "sum_min": 14, "action": "A/B 두 안 렌더 → 사용자 선택" },
+    "fail_action": "최저축 → L1 게이트/생성단계 역매핑 재큐 (A1↓→§4 재생성, A2↓→§3 타이포토큰, A3↓→§3/§5 조판, A4↓→§2 아키타입 재배분, A5↓→§5 조판 시그니처 추가)",
+    "report": "judge-report.json"
+  },
+  "enforce_policy": {
+    "_note": "§8.5 — 도출·잠정 임계는 실측 캘리브레이션 전 WARN(exit2) 운용, D5 109장 라벨링+파일럿 실측표 후 hard 승격. run_gates는 exit2를 warned 집계·배포 판정 미차감.",
+    "warn_until_calibrated": ["pagination.threshold(270)", "image.g13a.floor_ratio(0.5)", "contrast.g6plus.occlusion(0.08)", "diversity.shannon_norm_min(0.60)", "diversity.amplitude(0.35)", "diversity.max_consecutive_same(3)"],
+    "hard_from_start": ["typo_floor.abs_floor(37)", "typo_floor.cover.headline(160)", "typo_floor.stat.bignum(400)", "hierarchy.tier_contrast(1.4x/Δ200)", "hierarchy.min_layers(3)", "copy.fixed_slots", "image.g13a.cover_requires_raster", "image.g13a.manifest_gen_must_exist"]
+  },
+  "dwell": { "cps": 8.5, "add_seconds": 1.0, "floor_seconds": 1.0, "video_card_min": 1.5 }
+}

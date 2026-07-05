@@ -1,0 +1,47 @@
+{
+  "_meta": {
+    "schema_version": "2.0",
+    "source": "REDESIGN-PLAN §5 (조각 05-pagination-density.md) — 2026-07-04 Phase 0 동결",
+    "consumers": ["scripts/render/paginate.mjs (Tier-1 그리디, Phase 2 신규)", "scripts/render/measure.mjs (Tier-2 Playwright 실측, Phase 2 신규)"],
+    "rule": "보수 지배 — Tier-1(에디토리얼 캡)과 Tier-2(기하 캡) 중 더 많이 쪼개는 쪽이 이긴다"
+  },
+  "aspect_profiles": {
+    "4:5":  { "content_box": [888, 1158], "threshold": 270, "line_h_px": 70.4, "line_budget": 12, "body_line_cap": 5 },
+    "1:1":  { "content_box": [888, 888],  "threshold": 210, "line_h_px": 70.4, "line_budget": 8,  "body_line_cap": 4 },
+    "9:16": { "content_box": [888, 1728], "threshold": 360, "line_h_px": 70.4, "line_budget": 20, "body_line_cap": 8 }
+  },
+  "role_weight": {
+    "kicker": 30, "headline_per_char": 6.0, "body_per_char": 1.4,
+    "highlight_extra_per_char": 1.6, "caption_per_char": 1.8, "source": 30, "quote_per_char": 1.7,
+    "_provenance": "para 1.4/h1 6.0/highlight 1.6(3.0 원본을 body 가산분으로 분해)/item 1.8 = lijigang 확정값. quote 1.7 = repo 추정값(§9 O9 — 실측 캘리브레이션 대상)"
+  },
+  "hard_caps": { "body_chars": 90, "cover_chars": 24, "body_line_cap": 5, "chars_per_line": 18 },
+  "greedy_boundary": ["paragraph", "section"],
+  "orphan_rule": "소제목(h1) 뒤엔 최소 본문 1블록을 같은 카드에(고아 제목 금지)",
+  "tier2": {
+    "engine": "playwright-chromium (jsdom 금지 — 라인박스 미계산)",
+    "stage": "paginate.mjs 뒤, export_card.mjs 앞 (pre-export measure 스테이지)",
+    "split_rule": "splitAtLastFullLine — 줄 경계에서만, UNSPLITTABLE=[section, manual-break, H1-H6, HR]",
+    "max_iterations": 2,
+    "on_no_convergence": "G2 글자수 하드캡 위반으로 카피 단축 요구",
+    "emits": "measure.json (references/schemas/measure.schema.json)"
+  },
+  "wave": {
+    "spike_fill_min": 0.6,
+    "max_consecutive_dense": 3, "max_consecutive_valley": 2,
+    "cover_adjacent_dense_ok": true, "pre_cta_valley_preferred": true,
+    "valley_pick_order": [
+      { "cond": "hasStrongStat", "arch": "A4", "type": "stat" },
+      { "cond": "hasQuotableLine(<=25자)", "arch": "A6", "type": "quote" },
+      { "cond": "hasReservedImage(brief.image_slot)", "arch": "A10", "type": "image" },
+      { "cond": "else", "arch": "A12", "type": "hook" }
+    ],
+    "revision_rule": "재실행 시 밸리 고정·A3만 fill 재계산(밸리를 f_i로 재채점하지 않음)"
+  },
+  "fixed_slots": {
+    "cover": { "index": 1, "arch": "A1" },
+    "toc":   { "cond": "n_body_arith >= 6", "arch": "A2", "index": 2 },
+    "cta":   { "index": "last", "arch": "A11" }
+  },
+  "recalibration": "Tier-2 실측 오버플로율 반복 발생 시 threshold 하향(270→255) — §5.5 역보정 경로, §8.5 WARN 운용"
+}

@@ -1,0 +1,188 @@
+{
+  "tier": "brand",
+  "schema_version": "2.0",
+  "label": "브랜드 BI/미니멀 — 스위스 타이포·바우하우스·브루탈리즘",
+  "design_skill_ref": "design-vercel (라이트) / design-linear (다크)",
+  "surface_set": [
+    {
+      "id": "swiss-white",
+      "bg": "#FFFFFF",
+      "ink": "#111111",
+      "ink_body": "#3A3A3A",
+      "ink_muted": "#4F4F4F",
+      "ink_faint": "#939393",
+      "hairline": "#EBEBEB",
+      "tint": "#F5F5F5",
+      "_from": "스위스 화이트(mdcard light-cream 계열)",
+      "_faint_fix": "#9A9A9A→#939393 (G3-2 faint≥3 정정, Phase 1)"
+    },
+    {
+      "id": "ink-dark",
+      "bg": "#171717",
+      "ink": "#FAFAFA",
+      "ink_body": "#C9C9C9",
+      "ink_muted": "#8A8A8A",
+      "ink_faint": "#656565",
+      "hairline": "#23252A",
+      "tint": "#1E1E1E",
+      "_from": "mdcard dark-charcoal bg",
+      "_faint_fix": "#5E5E5E→#656565 (G3-2 faint≥3 정정, Phase 1)"
+    },
+    {
+      "id": "bauhaus-paper",
+      "bg": "#F4F1EA",
+      "ink": "#1A1A1A",
+      "ink_body": "#3D3A33",
+      "ink_muted": "#514E46",
+      "ink_faint": "#8E8A7F",
+      "hairline": "#DED9CC",
+      "tint": "#EDE8DB",
+      "_from": "바우하우스 페이퍼",
+      "_faint_fix": "#959085→#8E8A7F (G3-2 faint≥3 정정, Phase 1)"
+    }
+  ],
+  "accent_set": [
+    {
+      "id": "swiss-red",
+      "acc": "#C8341F",
+      "on_acc": "#FFFFFF",
+      "hl": "#C8341F",
+      "hl_alpha": 0.4,
+      "pill_bg": "#C8341F",
+      "pill_ink": "#FFFFFF",
+      "_note": "백색 5.29:1 (정정: 종전 #E5482F는 3.96 AA 미달·G3 fail — §6.8)"
+    },
+    {
+      "id": "bauhaus-blue",
+      "acc": "#2B4C9B",
+      "on_acc": "#FFFFFF",
+      "hl": "#2B4C9B",
+      "hl_alpha": 0.4,
+      "pill_bg": "#2B4C9B",
+      "pill_ink": "#FFFFFF"
+    },
+    {
+      "id": "electric-blue",
+      "acc": "#005CD1",
+      "on_acc": "#FFFFFF",
+      "hl": "#005CD1",
+      "hl_alpha": 0.4,
+      "pill_bg": "#005CD1",
+      "pill_ink": "#FFFFFF",
+      "_note": "종전 #0070F3는 백색 4.55 아슬 → #005CD1 하향(≥5:1)"
+    }
+  ],
+  "default_surface": "swiss-white",
+  "default_accent": "swiss-red",
+  "bauhaus_primaries": {
+    "red": "#D8412F",
+    "blue": "#2B4C9B",
+    "yellow": "#F2C811",
+    "black": "#1A1A1A",
+    "paper": "#F4F1EA",
+    "_note": "순수 사조 스와치(면·도형용). accent 승격 금지 — red #D8412F 백색 4.45 미달"
+  },
+  "fonts": {
+    "title": {
+      "family": "Gmarket Sans",
+      "weight": 700,
+      "woff2": null,
+      "woff2_fallback": "assets/fonts/DoHyeon.woff2",
+      "fallback_family": "Do Hyeon",
+      "license": "자체(임베드 허용)",
+      "note": "번들 전까지 Do Hyeon(OFL)로 G3 통과 (§9 O18 백로그)"
+    },
+    "body": {
+      "family": "Pretendard",
+      "weight": 400,
+      "woff2": "assets/fonts/Pretendard-Regular.woff2",
+      "license": "OFL"
+    },
+    "accent": {
+      "family": "Pretendard",
+      "weight": 900,
+      "woff2": "assets/fonts/Pretendard-Black.woff2",
+      "license": "OFL",
+      "_note": "계획 §6.8은 ExtraBold(800)이나 미번들 — G3 woff2 실재 요건으로 번들 실재하는 Black(900)으로 정정(Phase 0, BUILD-LOG 기록)"
+    }
+  },
+  "grid": {
+    "margin_px": 96,
+    "cols": 12,
+    "whitespace_ratio": "35-45%",
+    "baseline_grid": true,
+    "safe_card_y": [
+      120,
+      1230
+    ]
+  },
+  "radius_px": 0,
+  "typography": {
+    "title_px": [
+      84,
+      120
+    ],
+    "body_px": [
+      48,
+      56
+    ],
+    "l0_px": 28,
+    "l1_px": [
+      72,
+      104
+    ],
+    "l2_px": [
+      46,
+      52
+    ],
+    "l4_px": [
+      30,
+      36
+    ],
+    "l5_px": [
+      28,
+      32
+    ],
+    "line_height_title": 1.15,
+    "line_height_body": 1.6,
+    "letter_spacing_title": "-0.03em",
+    "letter_spacing_body": "-0.01em",
+    "align": "left-flush"
+  },
+  "d3": {
+    "acc_role": "emphasis-only",
+    "hl_alpha": 0.4,
+    "hl_cover": "50%",
+    "rule_hair_px": 1,
+    "rule_bold_px": 6,
+    "underline_bar_px": 8,
+    "pill_radius_px": 0,
+    "kicker_px": 28,
+    "kicker_weight": 700,
+    "block_gap_em": 0.9,
+    "ink_decay": [
+      "100%",
+      "80%",
+      "60%",
+      "50%"
+    ],
+    "emphasis_budget": 2,
+    "tier_max_layers": 5,
+    "_note": "pill_radius 0(각진 스위스), hairline 1px 보더가 그림자 대체. 브랜드는 인포/비교 dense → 계층 5 허용"
+  },
+  "compose_mode": "제품 누끼 + 미니멀 단색/그리드 배경 + 타이포",
+  "image": {
+    "playbook": "C4 미니멀 프로덕트 / C6 인포그래픽",
+    "look": "L3 미니멀 프로덕트 / L4 스위스 타이포",
+    "sajo": "M1 바우하우스 / M4 브루탈리즘",
+    "bg_prompt_hint": "minimal single-color studio backdrop, product hero, swiss grid negative space, no text",
+    "cutout_prompt_hint": "product on clean seamless backdrop, soft shadow, centered"
+  },
+  "motion": {
+    "character": "정확·기계적",
+    "entrance": "slide-in|mask-wipe",
+    "emphasis": "counter|underline-pop",
+    "transition": "push|hard-cut",
+    "pace": "crisp"
+  }
+}

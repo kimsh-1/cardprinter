@@ -1,0 +1,166 @@
+{
+  "_meta": {
+    "axis": "R3 — 바이럴 캐러셀 시퀀스 프리셋(조회·저장 실증 기반)",
+    "date": "2026-07-05",
+    "purpose": "카피 단계(S2)·codex 양산이 '어떤 카드를 어떤 순서로'를 즉흥 결정하지 않도록, 연구 검증 6유형을 재사용 시퀀스로 고정. 티어(톤)와 직교 — 한 템플릿은 여러 티어로 렌더 가능.",
+    "evidence": "00_research/R9_viral-templates/findings-web.md (Metricool 24.4M·Socialinsider 22M·Buffer 52M A급). 실물 67장(refs/) 13개 캐러셀 귀납.",
+    "how_codex_reads": "topic.json에 template 키 지정 → 카피 에이전트가 sequence[]를 카드 스캐폴드로, boosters를 필수 슬롯으로 채운다. 미지정 시 auto_pick 규칙으로 선택.",
+    "confidence": "sequence·boosters high(정량). tone_fit med(귀납)."
+  },
+
+  "cross_cutting_boosters": {
+    "_desc": "전 템플릿 공통 — 조회/저장/댓글 실증 부스터. 게이트는 아니고 카피 필수 슬롯 규칙(위반 시 카피 품질 저하로 판정 G17에서 감점).",
+    "triple_hook": {
+      "rule": "슬라이드 1·2·3을 각각 독립 훅으로 설계(2번=두번째 표지, 3번=세번째 표지).",
+      "why": "무반응 시 2·3번이 새 콘텐츠처럼 재노출(최대 3회 도달 기회). Metricool 재노출 메커니즘.",
+      "apply": "slide2.type=hook(예고/신뢰), slide3=본론 첫 카드도 헤드라인 훅 강도 유지."
+    },
+    "save_trigger_slot": {
+      "rule": "본론 중반(전체의 45~65% 지점)에 체크리스트/스텝/숫자요약 카드 1장 이상 필수.",
+      "why": "저장은 '나중에 다시 볼' 정보밀도 카드에서 발생. 캐러셀 저장=단일이미지 9배(Metricool).",
+      "apply": "list/timeline/stat 중 1 슬롯을 mid에 배치."
+    },
+    "end_cta": {
+      "rule": "마지막 카드 1장은 명확한 CTA(저장/공유/댓글/팔로우 중 콘텐츠 유형별 1개).",
+      "why": "댓글 유도 CTA 댓글 +202.78%, 요약형 마지막장이 한국형 최적(copy-formulas D).",
+      "apply": "cta.type=cta, cta_intent를 콘텐츠유형→우선CTA 표(copy-formulas D-1)에서 결정."
+    },
+    "hashtag_minimal": {
+      "rule": "해시태그 최소(0~3개). 캡션에 질문 1개.",
+      "why": "해시태그 사용 시 조회 -31.70%, 질문 포함 댓글 +36.70%(Socialinsider)."
+    },
+    "slide_count": {
+      "rule": "8~10장 기본(U자형 — 3장 후 하락, 8장+ 재상승, 10장 ER 2%+ 최고).",
+      "range": [8, 10],
+      "hard_max": 20
+    }
+  },
+
+  "templates": {
+    "checklist": {
+      "label": "체크리스트/스텝 가이드",
+      "rank": 1,
+      "primary_metric": "저장",
+      "evidence_grade": "A",
+      "best_for": ["실용 팁", "방법론", "준비물/절차", "정책 신청법", "루틴"],
+      "tone_fit": ["brand", "data", "character", "editorial"],
+      "hook_types": ["H1", "H4", "H7"],
+      "slide_count": [8, 10],
+      "sequence": [
+        { "pos": 1, "type": "cover", "role": "숫자형 훅(N가지/N단계)" },
+        { "pos": 2, "type": "hook", "role": "예고: '순서대로 N개만 보세요' — 구조 예고" },
+        { "pos": "3..N-2", "type": "list", "role": "STEP/항목 카드(1카드=1스텝, 3~5항목 또는 스텝당 1카드)", "repeat": true },
+        { "pos": "N-1", "type": "stat", "role": "핵심 수치 or 요약 저장 트리거", "booster": "save_trigger_slot" },
+        { "pos": "N", "type": "cta", "role": "저장 CTA: '나중에 볼 때 위해 저장 ↓'", "cta_intent": "save" }
+      ]
+    },
+
+    "listicle": {
+      "label": "풀렝스 리스티클",
+      "rank": 2,
+      "primary_metric": "참여율(ER)",
+      "evidence_grade": "A",
+      "best_for": ["N가지 이유/방법/사례", "큐레이션", "오해 정리"],
+      "tone_fit": ["editorial", "brand", "character", "news"],
+      "hook_types": ["H1", "H5", "H6"],
+      "slide_count": [10, 10],
+      "sequence": [
+        { "pos": 1, "type": "cover", "role": "숫자형 훅(정확히 N=본문장수)" },
+        { "pos": 2, "type": "toc", "role": "목차 — N개 항목 미리보기(스와이프 유인)" },
+        { "pos": "3..N-2", "type": "dense", "role": "항목당 1카드: 주장+근거 1개 or 대조(남들은 A/하지만 B)", "repeat": true, "booster": "triple_hook" },
+        { "pos": "N-1", "type": "stat", "role": "가장 강한 수치 1장(중반~후반 저장 트리거)", "booster": "save_trigger_slot" },
+        { "pos": "N", "type": "cta", "role": "요약 N줄 + 팔로우/저장", "cta_intent": "save" }
+      ]
+    },
+
+    "data_infographic": {
+      "label": "데이터/통계 인포그래픽",
+      "rank": 3,
+      "primary_metric": "저장·공유",
+      "evidence_grade": "B",
+      "best_for": ["경제/금융", "시장 동향", "비교 수치", "트렌드 리포트"],
+      "tone_fit": ["data", "news", "brand"],
+      "hook_types": ["H3", "H10", "H5"],
+      "slide_count": [8, 10],
+      "sequence": [
+        { "pos": 1, "type": "cover", "role": "의외의 수치 호기심갭 훅(답 감춤)" },
+        { "pos": 2, "type": "hook", "role": "신뢰: '{권위/데이터}에 따르면' — 출처 선공개" },
+        { "pos": 3, "type": "stat", "role": "핵심 빅넘버(dispnum 라벨+큰수)", "viz_kind": "number" },
+        { "pos": "4..N-3", "type": "stat", "role": "차트 카드(가로 바 2~5) ↔ 빅넘버 교차", "viz_kind": "chart", "repeat": true },
+        { "pos": "N-2", "type": "comparison", "role": "A vs B 대조(세로 스택)" },
+        { "pos": "N-1", "type": "list", "role": "핵심 3줄 요약", "booster": "save_trigger_slot" },
+        { "pos": "N", "type": "cta", "role": "공유 CTA: '같이 공부하는 친구에게 공유'", "cta_intent": "share" }
+      ]
+    },
+
+    "photo_story": {
+      "label": "포토덤프/혼합미디어",
+      "rank": 4,
+      "primary_metric": "ER(2.33% 1위·미개척)",
+      "evidence_grade": "A-",
+      "best_for": ["전시/문화/여행", "브랜드 무드", "비주얼 강한 주제"],
+      "tone_fit": ["editorial", "luxury", "character"],
+      "hook_types": ["H10", "H8", "H3"],
+      "slide_count": [8, 10],
+      "sequence": [
+        { "pos": 1, "type": "cover", "role": "풀블리드 포토 히어로 + 밴드 헤드라인" },
+        { "pos": 2, "type": "image", "role": "이미지+캡션(하단 앵커) — 맥락" },
+        { "pos": "3..N-3", "type": "image", "role": "포토+짧은 캡션(1컷=1장면)", "repeat": true, "booster": "triple_hook" },
+        { "pos": "N-2", "type": "quote", "role": "인용/핵심 한 문장(여백 대비)" },
+        { "pos": "N-1", "type": "dense", "role": "정리 문단(저장 유인)", "booster": "save_trigger_slot" },
+        { "pos": "N", "type": "cta", "role": "저장/팔로우 CTA", "cta_intent": "follow" }
+      ],
+      "note": "혼합미디어(정적 카드 사이 모션 1~2장)는 hyperframes 릴스 옵션으로 실현. 캐러셀은 정지 이미지."
+    },
+
+    "story_case": {
+      "label": "스토리텔링/케이스스터디",
+      "rank": 5,
+      "primary_metric": "완주율·댓글",
+      "evidence_grade": "B",
+      "best_for": ["성공/실패 사례", "인물 스토리", "전환 서사(before→after)"],
+      "tone_fit": ["editorial", "brand", "character", "news"],
+      "hook_types": ["H10", "H8", "H2"],
+      "slide_count": [8, 10],
+      "sequence": [
+        { "pos": 1, "type": "cover", "role": "호기심갭 훅(결과 먼저, 이유 감춤)" },
+        { "pos": 2, "type": "hook", "role": "긴장 설정: 문제/갈등 제시" },
+        { "pos": "3..N-3", "type": "dense", "role": "서사 전개 카드(발단→전개→위기)", "repeat": true },
+        { "pos": "N-2", "type": "stat", "role": "결과 수치(반전/해소)", "booster": "save_trigger_slot" },
+        { "pos": "N-1", "type": "quote", "role": "교훈/핵심 메시지" },
+        { "pos": "N", "type": "cta", "role": "댓글 CTA: '당신이라면?'", "cta_intent": "comment" }
+      ]
+    },
+
+    "versus": {
+      "label": "Before/After·비교형",
+      "rank": 6,
+      "primary_metric": "댓글",
+      "evidence_grade": "C+",
+      "best_for": ["A vs B 논쟁", "전후 비교", "선택지 정리", "오해 vs 사실"],
+      "tone_fit": ["news", "data", "brand", "character"],
+      "hook_types": ["H3", "H5", "H8"],
+      "slide_count": [8, 10],
+      "sequence": [
+        { "pos": 1, "type": "cover", "role": "질문형 훅(A vs B, 뭐가 맞을까?)" },
+        { "pos": 2, "type": "hook", "role": "쟁점 프레이밍" },
+        { "pos": "3..N-3", "type": "comparison", "role": "쟁점별 A/B 대조(세로 스택 — 좌우 금지)", "repeat": true, "booster": "triple_hook" },
+        { "pos": "N-2", "type": "stat", "role": "결정적 수치 1장", "booster": "save_trigger_slot" },
+        { "pos": "N-1", "type": "dense", "role": "결론/균형 정리" },
+        { "pos": "N", "type": "cta", "role": "댓글 CTA: '당신은 어느 쪽?'", "cta_intent": "comment" }
+      ]
+    }
+  },
+
+  "auto_pick": {
+    "_desc": "topic.json에 template 미지정 시 브리프 신호로 자동 선택(codex/카피 에이전트 규칙).",
+    "rules": [
+      { "if": "브리프에 STEP/절차/준비물/방법 키워드", "pick": "checklist" },
+      { "if": "차트/통계/수치 비교가 3개 이상", "pick": "data_infographic" },
+      { "if": "A vs B·전후·오해 프레임", "pick": "versus" },
+      { "if": "인물/사례/성공실패 서사", "pick": "story_case" },
+      { "if": "이미지 자산 풍부·문화/여행/전시", "pick": "photo_story" },
+      { "default": "listicle" }
+    ]
+  }
+}

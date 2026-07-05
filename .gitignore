@@ -1,0 +1,36 @@
+# node
+node_modules/
+scripts/node_modules/
+npm-debug.log*
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# render + factory outputs (regenerated)
+out/
+carousel/
+shorts/
+*.log
+prompt-attempt-*.md
+gate-attempt-*.log
+codex-attempt-*.log
+factory.log
+image-manifest.json
+route-images.json
+PASS
+FAIL
+summary.json
+
+# but keep the bundled sample's inputs (outputs are still ignored above)
+!examples/sample/brief.json
+!examples/sample/copy.json
+!examples/sample/tokens.json
+
+# editor / os / agent scratch
+.DS_Store
+.omc/
+.cache/
+*.orig

@@ -1,0 +1,25 @@
+{
+  "_comment": "codex 단독 실행용 훅 — .codex/hooks.json에 배치. 무인 실행에서도 동일 하드게이트 강제.",
+  "hooks": {
+    "post_file_write": [
+      {
+        "match": "copy.json$",
+        "run": "node /ABSOLUTE/PATH/TO/cardprinter/scripts/gates/g01_copy_count.mjs {dir}/copy.json {dir}/brief.json && node /ABSOLUTE/PATH/TO/cardprinter/scripts/gates/g02_copy_len.mjs {dir}/copy.json && node /ABSOLUTE/PATH/TO/cardprinter/scripts/gates/g10_fact_fidelity.mjs {dir}/copy.json {dir}/brief.json",
+        "block_on_failure": true
+      },
+      {
+        "match": "tokens.json$",
+        "run": "node /ABSOLUTE/PATH/TO/cardprinter/scripts/gates/g03_tokens_schema.mjs {dir}/tokens.json {dir} && python3 /ABSOLUTE/PATH/TO/cardprinter/scripts/gates/g09_glyph_coverage.py {dir}/copy.json {dir}/tokens.json {dir}",
+        "block_on_failure": true
+      }
+    ],
+    "post_render": [
+      {
+        "match": "short.mp4$",
+        "run": "node /ABSOLUTE/PATH/TO/cardprinter/scripts/gates/g08_mp4_valid.mjs {file}",
+        "block_on_failure": true
+      }
+    ],
+    "_note": "codex 러너는 {dir}/{file} 치환 후 각 run을 셸 실행, exit!=0 이면 block_on_failure=true 시 파이프라인 정지. 실제 codex 훅 스키마에 맞춰 러너에서 어댑트."
+  }
+}

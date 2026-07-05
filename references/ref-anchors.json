@@ -1,0 +1,23 @@
+{
+  "_source": "D5_real-accounts/refs/captured-cards (109장, 16 post-sets) — REDESIGN-PLAN §7.1, 2026-07-04 Phase 0 동결",
+  "_usage": "G17 판정 에이전트가 tier·genre 라우팅으로 앵커 서브셋만 비교(전체 비교 금지). signature 문장은 5축 채점의 정성 기준선.",
+  "post_sets": {
+    "banksalad_moneyreport": 8, "careet_ctrl": 8, "careet_trendmap": 3, "folin_reel": 8,
+    "garyvee_6lessons": 8, "longblack_a": 6, "longblack_b": 6, "longblack_hiring": 6,
+    "newneek_fund": 8, "newneek_starbucks": 8, "ohou_content": 1, "theedit_toss": 8,
+    "toss_simplicity": 8, "ttimes_aiask": 8, "ttimes_glasswing": 7, "uppity_stock": 8
+  },
+  "total_cards": 109,
+  "anchors": {
+    "news":         { "sets": ["newneek_fund", "newneek_starbucks", "ttimes_aiask", "ttimes_glasswing", "uppity_stock"],
+                      "signature": "형광/브랜드색 밴드 헤드라인 · eyebrow pill · hairline · 채도죽인 사진", "tier_hint": "luxury|brand" },
+    "knowledge":    { "sets": ["longblack_a", "longblack_b", "longblack_hiring", "folin_reel"],
+                      "signature": "여백·인용 중심 미니멀 · 블루 액센트 따옴표 · ghost 워드마크 · 슬라이드당 1인사이트", "tier_hint": "luxury" },
+    "fintech_data": { "sets": ["toss_simplicity", "banksalad_moneyreport"],
+                      "signature": "브랜드색 밴드 리스트 · 3D 글로시 젤리 아이콘 · 말풍선 툴팁 · 극도로 시스템적", "tier_hint": "brand" },
+    "lifestyle":    { "sets": ["theedit_toss", "careet_ctrl", "careet_trendmap", "ohou_content"],
+                      "signature": "이미지 히어로 · 인포그래픽 지도(저장각) · 스티커/워시테이프 · 번호 pill", "tier_hint": "character|brand" },
+    "global_value": { "sets": ["garyvee_6lessons"],
+                      "signature": "빅넘버 에디토리얼 표지 · 아이콘 라디얼 대칭 · author bar(아바타+핸들) · 명시적 Save/Share", "tier_hint": "brand" }
+  }
+}

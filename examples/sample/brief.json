@@ -1,0 +1,10 @@
+{
+  "topic": "2026 상반기, 잊고 지낸 좋은 소식 9가지",
+  "genre": "lifestyle",
+  "tier": "newsprint",
+  "card_count": 8,
+  "selection_rationale": "newsprint 티어(goodgoodgoodco 이식) 렌더 검증용 파일럿 — 마스트헤드/커버 포스터/T3 기사카드 구조 확인 목적. 통계 미포함(디자인 검증 전용, fact_refs 불필요).",
+  "image_subject": {
+    "bg": "documentary photojournalism photograph, warm natural daylight, everyday Korean street or community scene, candid, no text anywhere"
+  }
+}

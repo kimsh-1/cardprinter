@@ -1,0 +1,183 @@
+{
+  "tier": "character",
+  "schema_version": "2.0",
+  "label": "귀여운 캐릭터 — 소프트 파스텔·3D 클레이·멤피스",
+  "design_skill_ref": "design-notion",
+  "_wcag_note": "surface는 mdcard 명5(mint/sky/blush)만, ink는 다크 head값 강제 → 대비 4.5:1. accent(파스텔 팝)는 장식·pill 전용, 본문 텍스트 금지. pill 시 on_acc/acc ≥4.5 실측.",
+  "surface_set": [
+    {
+      "id": "mint",
+      "bg": "#E4F4EF",
+      "ink": "#0B2A22",
+      "ink_body": "#35564C",
+      "ink_muted": "#55736A",
+      "ink_faint": "#748F87",
+      "hairline": "#CDE6DD",
+      "tint": "#D6EEE7",
+      "_from": "mdcard light-mint bg",
+      "_faint_fix": "#7E9990→#748F87 (G3-2 faint≥3 정정, Phase 1)",
+      "_muted_fix": "#5E7C72→#55736A (L4/L5 텍스트 4.5:1 — G6<48px 하드와 정합, Phase 1)"
+    },
+    {
+      "id": "sky",
+      "bg": "#EEF4FF",
+      "ink": "#0B1B3A",
+      "ink_body": "#34435E",
+      "ink_muted": "#5C6A82",
+      "ink_faint": "#7E8AA0",
+      "hairline": "#D6E1F5",
+      "tint": "#E1EAFB",
+      "_from": "mdcard light-sky bg"
+    },
+    {
+      "id": "blush",
+      "bg": "#FDF1F3",
+      "ink": "#3A0B18",
+      "ink_body": "#6B3A44",
+      "ink_muted": "#8E636E",
+      "ink_faint": "#A6838C",
+      "hairline": "#F3DBE0",
+      "tint": "#F8E5E9",
+      "_from": "mdcard light-blush bg",
+      "_faint_fix": "#AB8992→#A6838C (G3-2 faint≥3 정정, Phase 1)",
+      "_muted_fix": "#906670→#8E636E (L4/L5 텍스트 4.5:1 — G6<48px 하드와 정합, Phase 1)"
+    }
+  ],
+  "accent_set": [
+    {
+      "id": "peach",
+      "acc": "#FF9EB1",
+      "on_acc": "#3A0B18",
+      "hl": "#FFD1DA",
+      "hl_alpha": 0.7,
+      "pill_bg": "#FF9EB1",
+      "pill_ink": "#3A0B18"
+    },
+    {
+      "id": "mintpop",
+      "acc": "#7FD6B0",
+      "on_acc": "#0B2A22",
+      "hl": "#B8ECD8",
+      "hl_alpha": 0.7,
+      "pill_bg": "#7FD6B0",
+      "pill_ink": "#0B2A22"
+    },
+    {
+      "id": "lavender",
+      "acc": "#A39FE1",
+      "on_acc": "#1E1A4B",
+      "hl": "#D5D2F2",
+      "hl_alpha": 0.7,
+      "pill_bg": "#A39FE1",
+      "pill_ink": "#1E1A4B"
+    }
+  ],
+  "default_surface": "mint",
+  "default_accent": "peach",
+  "fonts": {
+    "title": {
+      "family": "Jua",
+      "weight": 400,
+      "woff2": "assets/fonts/Jua.woff2",
+      "license": "OFL",
+      "hangul_glyphs": 2515,
+      "fallback_family": "Pretendard",
+      "fallback_woff2": "assets/fonts/Pretendard-Bold.woff2",
+      "_note": "Jua 2,515음절<11,172 → 미지원 음절 Pretendard 폴백(G3-7 probe, PoC4 실증 2026-07-04)"
+    },
+    "body": {
+      "family": "Gowun Dodum",
+      "weight": 400,
+      "woff2": "assets/fonts/GowunDodum.woff2",
+      "license": "OFL",
+      "hangul_glyphs": 11552
+    },
+    "accent": {
+      "family": "Gaegu",
+      "weight": 700,
+      "woff2": "assets/fonts/Gaegu-Bold.woff2",
+      "license": "OFL",
+      "hangul_glyphs": 2499,
+      "fallback_family": "Pretendard",
+      "fallback_woff2": "assets/fonts/Pretendard-Bold.woff2",
+      "_note": "Gaegu 2,499음절 → 강조 미지원 음절 Pretendard-Bold 폴백"
+    }
+  },
+  "grid": {
+    "margin_px": 72,
+    "cols": 1,
+    "whitespace_ratio": "30-40%",
+    "safe_card_y": [
+      120,
+      1230
+    ]
+  },
+  "radius_px": 28,
+  "typography": {
+    "title_px": [
+      88,
+      120
+    ],
+    "body_px": [
+      48,
+      56
+    ],
+    "l0_px": 30,
+    "l1_px": [
+      72,
+      100
+    ],
+    "l2_px": [
+      46,
+      52
+    ],
+    "l4_px": [
+      32,
+      36
+    ],
+    "l5_px": [
+      28,
+      30
+    ],
+    "line_height_title": 1.25,
+    "line_height_body": 1.6,
+    "letter_spacing_title": "0",
+    "letter_spacing_body": "0"
+  },
+  "d3": {
+    "acc_role": "emphasis-only",
+    "hl_alpha": 0.7,
+    "hl_cover": "60%",
+    "rule_hair_px": 2,
+    "rule_bold_px": 8,
+    "underline_bar_px": 10,
+    "pill_radius_px": 999,
+    "kicker_px": 30,
+    "kicker_weight": 700,
+    "block_gap_em": 1.0,
+    "ink_decay": [
+      "100%",
+      "80%",
+      "60%",
+      "50%"
+    ],
+    "emphasis_budget": 2,
+    "tier_max_layers": 4,
+    "_note": "파스텔 형광펜 alpha 0.70(연한 bg 발색), 언더라인바 10px"
+  },
+  "compose_mode": "캐릭터/마스코트 누끼 레이어를 파스텔 CSS 배경 위에 (누끼 필수)",
+  "image": {
+    "playbook": "C10 만화 / C7 카드뉴스(3D 클레이)",
+    "look": "L7 소프트 파스텔",
+    "sajo": "M3 멤피스",
+    "cutout_prompt_hint": "cute 3D clay mascot character, clean solid pastel background, soft studio light, full body, no text",
+    "rembg_model": "birefnet-general (소품시 birefnet-portrait)"
+  },
+  "motion": {
+    "character": "바운시 통통",
+    "entrance": "scale-pop",
+    "emphasis": "finite-pulse|kenburns 5-8%",
+    "transition": "push|pop",
+    "pace": "lively"
+  }
+}

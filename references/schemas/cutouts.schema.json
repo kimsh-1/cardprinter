@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "out/card-NN.cutouts.json — 컷아웃 알파 재배치 계약 (REDESIGN-PLAN §4.9②, Phase 0 동결)",
+  "description": "export_card.mjs가 텍스트([data-slot]→slots.json)와 분리해 컷아웃([data-role=cutout])을 방출. g06plus_occlusion.mjs가 소비: src 원본 알파 → frame_bbox 리샘플 → 텍스트 슬롯 bbox와 교집합 occ_ratio, max>0.08 → FAIL(exit 1). 입력 결손도 exit 1(fail-closed). 컷아웃은 블리드 허용 — G11' 세이프존 검사 대상 아님.",
+  "type": "object",
+  "required": ["canvas", "cutouts"],
+  "properties": {
+    "canvas": { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+    "cutouts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "src", "frame_bbox", "z"],
+        "properties": {
+          "role": { "const": "cutout" },
+          "src": { "type": "string", "description": "원본 투명 PNG 경로(알파 되읽기용)" },
+          "frame_bbox": { "type": "array", "items": { "type": "number" }, "minItems": 4, "maxItems": 4,
+                          "description": "[x0,y0,x1,y1] 프레임 좌표(블리드 시 프레임 밖 값 허용)" },
+          "z": { "type": "integer" },
+          "src_wh": { "type": "array", "items": { "type": "integer" }, "minItems": 2, "maxItems": 2 },
+          "alpha_threshold": { "type": "integer", "default": 32 }
+        }
+      }
+    }
+  }
+}

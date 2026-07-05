@@ -1,0 +1,49 @@
+{
+  "_meta": {
+    "axis": "R2 — shorts motion / retention / safe zones",
+    "date": "2026-07-04",
+    "confidence": "high on resolution/fps/length/hook; medium on exact safe-zone px (sources vary ±40-160px, values below are conservative worst-case per edge)",
+    "note": "Platforms crop/letterbox per device; all px assume a 1080x1920 upload canvas. Design critical content INSIDE these margins."
+  },
+  "resolution": { "width": 1080, "height": 1920, "aspect_ratio": "9:16" },
+  "fps": { "min": 24, "recommended": 30, "max": 60, "note": "30 is universal-safe; 60 recommended for motion-heavy but IG may throttle to 30 for low-activity accounts" },
+  "safe_zones": {
+    "_unit": "pixels on a 1080x1920 canvas; margin = distance from that edge that UI can cover",
+    "ig": { "top_px": 220, "bottom_px": 320, "left_px": 60, "right_px": 90, "safe_box": "996x1400 centered", "notes": "profile/follow top ~210-250; caption+audio+buttons bottom ~310-320; right engagement stack ~84. Stories are looser (top 100 / bottom 200)." },
+    "youtube": { "top_px": 200, "bottom_px": 340, "left_px": 60, "right_px": 110, "safe_box": "960x1380 centered (slightly left-shifted UI)", "notes": "default top minimal ~120 but title/channel can float to ~380; bottom subscribe+channel+desc ~300, grows to ~360 when description expands; right button stack ~96-120." },
+    "tiktok": { "top_px": 160, "bottom_px": 400, "left_px": 60, "right_px": 130, "safe_box": "890x1360 centered", "notes": "profile top ~108-160; bottom is the danger zone: captions+CTA+sound 320 organic, 370-484 for ads/long captions; right like/comment/share stack ~120-140. Caption height GROWS with text length." }
+  },
+  "safe_zone_universal": {
+    "_desc": "worst-case per edge across all 3 platforms — use as criteria-D gate for a single asset shipped everywhere",
+    "top_px": 220,
+    "bottom_px": 400,
+    "left_px": 90,
+    "right_px": 130,
+    "safe_box": "860x1300 centered-ish (shifted up ~50px because bottom UI is heavier than top)",
+    "keep_critical_within": { "x": [90, 950], "y": [220, 1520] }
+  },
+  "hook_seconds": { "value": 3, "critical_first": 1, "note": "50-60% of drop-off happens in first 3s; deliver value/tension by 1s, no slow intros/logos" },
+  "caption": {
+    "position_pct": { "top_pct": 62, "band_pct": [55, 78], "note": "vertical center of caption ~60-65% down; never below ~78% (y>1500) or it hits bottom UI" },
+    "position_px": { "baseline_y": 1250, "keep_above_y": 1500 },
+    "min_font_px": 48,
+    "recommended_font_px": [64, 90],
+    "words_per_line": [2, 4],
+    "style": "bold heavy-weight sans-serif (Helvetica Neue / Open Sans / Montserrat-Bold), high contrast, stroke or box background, word-by-word or phrase kinetic reveal",
+    "note": "min 48px is a readability floor (scaled from 40-60px @1080p body-text rule); viral short-form captions run large (64-90px+)"
+  },
+  "length_seconds": { "min": 15, "recommended": 30, "max": 60, "note": "2026 avg Short ~33s; sweet spot 21-34s; >60s needs 80-90% retention to perform. Platforms allow up to 3min+ but retention economics favor <60s." },
+  "card_duration_seconds": { "min": 1.5, "recommended": 3, "max": 4, "fast_montage": [0.5, 1.5], "note": "one card = one idea; hold 2-4s WITH continuous motion (Ken Burns) so frame never freezes; cut faster on beats" },
+  "transitions": [
+    "hard cut on beat (default card-to-card)",
+    "push / slide (directional card swap)",
+    "zoom-through / punch-in scale",
+    "whip-pan (fast directional blur)",
+    "wipe / mask reveal",
+    "cut-out / subject-pop (trending)",
+    "crossfade (only for mood/slow segments)"
+  ],
+  "entrance_animations": ["fade-in", "slide-in (from edge)", "scale-up / pop", "typewriter / word-by-word text reveal", "blur-to-focus"],
+  "emphasis_animations": ["Ken Burns slow zoom+pan on static card", "punch-in scale on keyword", "highlight/underline pop", "shake on impact word", "color/scale key-number count-up"],
+  "motion_grammar_note": "Card-news→shorts core rule: every still card must carry continuous sub-motion (Ken Burns 3-8% zoom or slow pan) for its whole duration so it reads as video, not a freeze-frame; layer a kinetic text reveal on the hook card; sync card cuts to audio beats."
+}

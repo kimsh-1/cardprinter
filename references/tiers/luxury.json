@@ -1,0 +1,172 @@
+{
+  "tier": "luxury",
+  "schema_version": "2.0",
+  "label": "럭셔리/프리미엄 — 에디토리얼·골드포일·시네마틱",
+  "design_skill_ref": "design-apple",
+  "surface_set": [
+    {
+      "id": "noir",
+      "bg": "#0E0F12",
+      "ink": "#F6F1E8",
+      "ink_body": "#D8D2C6",
+      "ink_muted": "#9A968C",
+      "ink_faint": "#6E6B64",
+      "hairline": "#23252A",
+      "tint": "#16181C",
+      "_from": "mdcard dark-charcoal bg 근사"
+    },
+    {
+      "id": "espresso",
+      "bg": "#181412",
+      "ink": "#F4EDE6",
+      "ink_body": "#C2B2A2",
+      "ink_muted": "#8F8377",
+      "ink_faint": "#6A6259",
+      "hairline": "#2A241F",
+      "tint": "#201A16",
+      "_from": "mdcard dark-espresso bg",
+      "_faint_fix": "#635B52→#6A6259 (G3-2 faint≥3 정정, Phase 1)"
+    },
+    {
+      "id": "champagne-paper",
+      "bg": "#F6F1E8",
+      "ink": "#2A1F14",
+      "ink_body": "#5B4A38",
+      "ink_muted": "#7A6B59",
+      "ink_faint": "#958976",
+      "hairline": "#E4DCCB",
+      "tint": "#EFE7D6",
+      "_from": "mdcard light-warmpaper bg",
+      "_faint_fix": "#A89C88→#958976 (G3-2 faint≥3 정정, Phase 1)",
+      "_muted_fix": "#8A7B67→#7A6B59 (L4/L5 텍스트 4.5:1 — G6<48px 하드와 정합, Phase 1)"
+    }
+  ],
+  "accent_set": [
+    {
+      "id": "champagne",
+      "acc": "#C8B08A",
+      "on_acc": "#0E0F12",
+      "hl": "#C8B08A",
+      "hl_alpha": 0.55,
+      "pill_bg": "#C8B08A",
+      "pill_ink": "#0E0F12"
+    },
+    {
+      "id": "burgundy",
+      "acc": "#8E2036",
+      "on_acc": "#F6F1E8",
+      "hl": "#8E2036",
+      "hl_alpha": 0.45,
+      "pill_bg": "#8E2036",
+      "pill_ink": "#F6F1E8"
+    },
+    {
+      "id": "deep-gold",
+      "acc": "#B8912F",
+      "on_acc": "#0E0F12",
+      "hl": "#B8912F",
+      "hl_alpha": 0.5,
+      "pill_bg": "#B8912F",
+      "pill_ink": "#0E0F12"
+    }
+  ],
+  "default_surface": "noir",
+  "default_accent": "champagne",
+  "fonts": {
+    "title": {
+      "family": "Noto Serif KR",
+      "weight": 900,
+      "woff2": "assets/fonts/NotoSerifKR-Black.woff2",
+      "license": "OFL",
+      "hangul_glyphs": 11541
+    },
+    "body": {
+      "family": "Pretendard",
+      "weight": 400,
+      "woff2": "assets/fonts/Pretendard-Regular.woff2",
+      "license": "OFL"
+    },
+    "accent": {
+      "family": "Pretendard",
+      "weight": 700,
+      "woff2": "assets/fonts/Pretendard-Bold.woff2",
+      "license": "OFL"
+    }
+  },
+  "grid": {
+    "margin_px": 120,
+    "cols": 1,
+    "whitespace_ratio": "45-55%",
+    "safe_card_y": [
+      120,
+      1230
+    ]
+  },
+  "radius_px": 4,
+  "typography": {
+    "title_px": [
+      96,
+      140
+    ],
+    "body_px": [
+      48,
+      56
+    ],
+    "l0_px": 28,
+    "l1_px": [
+      80,
+      116
+    ],
+    "l2_px": [
+      46,
+      52
+    ],
+    "l4_px": [
+      32,
+      36
+    ],
+    "l5_px": [
+      28,
+      32
+    ],
+    "line_height_title": 1.2,
+    "line_height_body": 1.6,
+    "letter_spacing_title": "-0.02em",
+    "letter_spacing_body": "-0.01em"
+  },
+  "d3": {
+    "acc_role": "emphasis-only",
+    "hl_alpha": 0.55,
+    "hl_cover": "55%",
+    "rule_hair_px": 1.5,
+    "rule_bold_px": 6,
+    "underline_bar_px": 8,
+    "pill_radius_px": 999,
+    "kicker_px": 28,
+    "kicker_weight": 700,
+    "block_gap_em": 1.1,
+    "ink_decay": [
+      "100%",
+      "80%",
+      "60%",
+      "50%"
+    ],
+    "emphasis_budget": 1,
+    "tier_max_layers": 4,
+    "_note": "럭셔리는 강조예산 1(절제), 계층 최대 4 — 여백 위주 미니멀 (§9 O13 취향, 파일럿 A/B 대상)"
+  },
+  "compose_mode": "통짜 시네마틱 배경 위주 (+선택적 제품 누끼)",
+  "image": {
+    "playbook": "C11 시네마틱 키아트",
+    "look": "L1 럭셔리 에디토리얼 / L8 골드포일",
+    "sajo": "M2 아르데코",
+    "bg_prompt_hint": "cinematic low-key editorial, parchment texture, gold hairline, empty title band top third, negative space, no text"
+  },
+  "motion": {
+    "character": "느린 우아함",
+    "entrance": "fade-up",
+    "emphasis": "kenburns 3-5%",
+    "transition": "crossfade|hard-cut",
+    "pace": "slow"
+  }
+}

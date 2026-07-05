@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "out/card-NN.remediation.json — G6+ 자동 remediation 상태 계약 (REDESIGN-PLAN §4.9④, Phase 0 동결)",
+  "description": "scripts/gates/remediate_contrast.mjs 상태파일. 레버 순서 고정: n1 스크림 → n2 오버레이 40→55% → n3 text-shadow+블러박스. pass → 그 렌더 채택 exit 0. max_attempts 소진 → best=argmax(min(cr_med,cr_p10)) 렌더 보존, final=fail-best, exit 1 + 사람 검토 플래그. Δcr_med<0.05면 조기중단→best. PoC 실증: 01_plan/redesign/poc/poc3_remediation.json (2026-07-04).",
+  "type": "object",
+  "required": ["card", "attempts", "max_attempts", "final"],
+  "properties": {
+    "card": { "type": "string" },
+    "max_attempts": { "type": "integer", "default": 3 },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["n", "levers", "pass"],
+        "properties": {
+          "n": { "type": "integer" },
+          "levers": { "type": "array", "items": { "enum": ["scrim", "overlay40", "overlay55", "text-shadow", "blurbox", "tint", "grayscale"] } },
+          "cr_med": { "type": ["number", "null"] },
+          "cr_p10": { "type": ["number", "null"] },
+          "pass": { "type": "boolean" }
+        }
+      }
+    },
+    "best_n": { "type": "integer" },
+    "final": { "enum": ["pass", "fail-best"] }
+  }
+}
