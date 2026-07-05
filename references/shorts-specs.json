@@ -33,7 +33,7 @@
     "note": "min 48px is a readability floor (scaled from 40-60px @1080p body-text rule); viral short-form captions run large (64-90px+)"
   },
   "length_seconds": { "min": 15, "recommended": 30, "max": 60, "note": "2026 avg Short ~33s; sweet spot 21-34s; >60s needs 80-90% retention to perform. Platforms allow up to 3min+ but retention economics favor <60s." },
-  "card_duration_seconds": { "min": 1.5, "recommended": 3, "max": 4, "fast_montage": [0.5, 1.5], "note": "one card = one idea; hold 2-4s WITH continuous motion (Ken Burns) so frame never freezes; cut faster on beats" },
+  "card_duration_seconds": { "min": 1.5, "recommended": 3, "max": 3.5, "fast_montage": [0.5, 1.5], "note": "one card = one idea; hold 2-3.5s (incl. cover). Static holds now use clean rise-in entrance (no Ken Burns), so shorter cuts read better and keep the whole reel in the ~30s retention sweet spot; cut faster on beats" },
   "transitions": [
     "hard cut on beat (default card-to-card)",
     "push / slide (directional card swap)",

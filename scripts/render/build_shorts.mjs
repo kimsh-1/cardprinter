@@ -146,6 +146,12 @@ cardFiles.forEach((file, i) => {
   const bodyM = html.match(/<body[^>]*>([\s\S]*?)<\/body>/);
   const rawCss = styleM ? styleM[1] : "";
   const rawBody = bodyM ? bodyM[1] : "";
+  // 카드 <body class="tier-newsprint ...">의 클래스 보존 — 릴스는 body '내부' HTML만 임베드하므로
+  // 이 클래스가 사라지면 .tier-newsprint 후손 셀렉터(사진 위치·has-topimg 패딩 등 티어 전용 레이아웃)가
+  // 전부 미적용돼 카드 계층구조가 붕괴한다(본문이 사진 위로 겹치고 하단이 빔). cardroot 래퍼로 되살린다.
+  const bodyOpenM = html.match(/<body([^>]*)>/);
+  const bodyClassM = bodyOpenM && bodyOpenM[1].match(/class="([^"]*)"/);
+  const bodyClasses = bodyClassM ? bodyClassM[1] : "";
   const scopeClass = `scene-${idx}`;
 
   const rootVars = extractRootVars(rawCss);
@@ -164,7 +170,10 @@ cardFiles.forEach((file, i) => {
   // 부동소수 누적오차로 인접 클립이 1ms씩 겹치는 걸 방지(결정론 겹침 방지).
   // 바닥(가독 최소 체류) 먼저 보장 → 천장(카드당 상한)으로 클램프. 커버 카드는 훅 구간이라 상한 예외.
   const durFloored = Math.max(rawDur, DWELL.video_card_min, DWELL.floor_seconds);
-  const dur = Math.round((isCover ? durFloored : Math.min(durFloored, CARD_MAX)) * 1000) / 1000;
+  // 커버도 상한 적용(구: isCover 예외라 커버가 11s까지 늘어져 릴스 전체가 40s로 밀림).
+  // 정적 홀드(Ken Burns 제거) 위에선 짧은 컷이 리텐션에 유리 — 커버는 훅 상한, 나머지는 카드 상한.
+  const cap = isCover ? Math.max(HOOK_SECONDS, CARD_MAX) : CARD_MAX;
+  const dur = Math.round(Math.min(durFloored, cap) * 1000) / 1000;
   const start = Math.round(t * 1000) / 1000;
   t = start + dur;
 
@@ -180,7 +189,7 @@ cardFiles.forEach((file, i) => {
   <div class="letterbox" style="background:${bg}"></div>
   <div class="wordmark" style="height:${topOffset}px;color:${ink}">${decodeEntities(copy.series_wordmark || "")}</div>
   <div id="cardbox-${idx}" class="${scopeClass}" style="top:${topOffset}px">
-${rawBody}
+    <div class="cardroot${bodyClasses ? " " + bodyClasses : ""}" style="position:absolute;inset:0">${rawBody}</div>
   </div>
   <div class="progress" style="top:${topOffset + firstH + 40}px">${dots}</div>
 </div>`);
