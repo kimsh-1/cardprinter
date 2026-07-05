@@ -26,7 +26,7 @@
 
 | ![](docs/demo-cover.png) | ![](docs/demo-stat.png) | ![](docs/demo-list.png) |
 |---|---|---|
-| Newsprint article (`newsprint`) | Honest bar chart (`data`) | Contents / hook (`news`) |
+| Photo article (`newsprint`) | Numbered roundup (`newsprint`) | Photo feature (`newsprint`) |
 
 *Hero above: the `newsprint` cover system — modeled on a 300K-like Instagram carousel.*
 
@@ -46,7 +46,7 @@ https://github.com/kimsh-1/cardprinter/raw/main/docs/demo-reel.mp4
 - **📐 Viral sequence templates** — checklist · listicle · data-infographic · photo-story · storytelling · versus, each a research-backed slide flow (triple-hook, mid save-trigger, end CTA).
 - **🛡️ Physical quality gates** — contrast (WCAG pixel-measured), overflow (bbox ⊂ safe zone), fact-fidelity (no fabricated numbers), typography floor, layout diversity — all exit-code hard gates, not suggestions.
 - **📊 Honest charts** — echarts SSR bar charts with a 0-based scale; the display string is the source of truth so numbers can't be exaggerated.
-- **🎬 Card-news → Reels** — finished cards are composited into a 1080×1920 timeline (Ken Burns + kinetic motion), silent kinetic captions, per-card dwell derived from reading speed.
+- **🎬 Card-news → Reels** — finished cards are composited into a 1080×1920 timeline with clean rise-in transitions (list/chart items reveal one by one — no zoom, no jitter), silent kinetic captions, per-card dwell derived from reading speed.
 - **🏭 Mass production** — a headless `codex` factory runner produces topics in parallel with a self-heal loop (failed gates are fed back and regenerated).
 
 ---

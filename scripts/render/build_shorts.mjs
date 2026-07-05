@@ -185,18 +185,23 @@ ${rawBody}
   <div class="progress" style="top:${topOffset + firstH + 40}px">${dots}</div>
 </div>`);
 
-  // ── 모션(요소가 없으면 GSAP 셀렉터가 빈 배열 → 자연히 no-op) ──
+  // ── 등장 모션 v3: 확대(Ken Burns)·바운스·가로쓸림 전면 제거. 전부 "아래→위 상승+페이드"로 통일.
+  //    카드 전체 스케일 애니(구 scale 1→1.045)는 진동/줌의 주범이라 삭제 — 정적 홀드가 안정·가독 우선.
+  //    scale/back.out 이징도 제거(오버슈트=진동). ease는 전부 power2/3.out(부드러운 감속, 오버슈트 없음).
   const entranceDur = Math.min(HOOK_SECONDS, dur * 0.8);
-  tlLines.push(`tl.fromTo("#cardbox-${idx}",{scale:1},{scale:1.045,duration:${dur.toFixed(3)},ease:"none"},${start.toFixed(3)});`);
   if (isCover) {
-    tlLines.push(`tl.from("#scene-${idx} .cover-block",{opacity:0,scale:0.82,duration:${entranceDur.toFixed(3)},ease:"power3.out"},${start.toFixed(3)});`);
+    tlLines.push(`tl.from("#scene-${idx} .cover-block",{opacity:0,y:64,duration:${entranceDur.toFixed(3)},ease:"power3.out"},${start.toFixed(3)});`);
   } else {
     tlLines.push(`tl.from("#scene-${idx} .z1",{opacity:0,y:50,duration:0.6,ease:"power2.out"},${(start + 0.1).toFixed(3)});`);
   }
-  tlLines.push(`tl.from("#scene-${idx} .li-row, #scene-${idx} .blk-bullets li, #scene-${idx} .blk-icon-cell",{opacity:0,y:30,duration:0.5,stagger:0.12,ease:"power2.out"},${(start + 0.35).toFixed(3)});`);
-  tlLines.push(`tl.from("#scene-${idx} .dispnum",{opacity:0,scale:0.7,duration:0.5,ease:"back.out(1.7)"},${(start + 0.25).toFixed(3)});`);
-  tlLines.push(`tl.fromTo("#scene-${idx} .chart-box",{scaleX:0.05},{scaleX:1,duration:0.7,ease:"power2.out",transformOrigin:"left center"},${(start + 0.3).toFixed(3)});`);
-  tlLines.push(`tl.from("#scene-${idx} .cutout",{opacity:0,scale:0.85,duration:0.5,ease:"back.out(1.5)"},${(start + 0.2).toFixed(3)});`);
+  // 목차·리스트·불릿 — 항목이 하나씩 순차 상승(stagger). .toc-row 포함(목차가 한꺼번에 뜨던 문제 해결).
+  tlLines.push(`tl.from("#scene-${idx} .toc-row, #scene-${idx} .li-row, #scene-${idx} .blk-bullets li, #scene-${idx} .blk-icon-cell",{opacity:0,y:38,duration:0.5,stagger:0.16,ease:"power2.out"},${(start + 0.35).toFixed(3)});`);
+  // 큰 숫자 — 상승만(줌·바운스 제거).
+  tlLines.push(`tl.from("#scene-${idx} .dispnum, #scene-${idx} .bignum",{opacity:0,y:46,duration:0.55,ease:"power2.out"},${(start + 0.25).toFixed(3)});`);
+  // 차트 — 아래에서 부드럽게 상승(구 가로 scaleX 쓸림 제거). 막대 개별 stagger는 SVG 구조 의존이라 컨테이너 단위로 통일.
+  tlLines.push(`tl.from("#scene-${idx} .chart-box",{opacity:0,y:50,duration:0.6,ease:"power2.out"},${(start + 0.3).toFixed(3)});`);
+  // 컷아웃 인물 — 상승만(줌·바운스 제거).
+  tlLines.push(`tl.from("#scene-${idx} .cutout",{opacity:0,y:32,duration:0.5,ease:"power2.out"},${(start + 0.2).toFixed(3)});`);
 });
 
 const totalDur = Math.round(t * 100) / 100;

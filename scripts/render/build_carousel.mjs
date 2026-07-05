@@ -484,7 +484,7 @@ body.tier-newsprint{background-color:var(--bg);
 .tier-newsprint .wrap.has-topimg{padding-top:790px}
 .tier-newsprint .pill{background:transparent;color:var(--ink);padding:0;border-radius:0;letter-spacing:.02em;line-height:1.3;max-width:88%}
 .tier-newsprint .card--cover .hl{letter-spacing:-0.045em;line-height:1.05}
-.tier-newsprint .card--cover.has-masthead::after{content:"";position:absolute;left:96px;right:96px;bottom:130px;height:var(--rule-hair);background:var(--ink)} /* 커버 하단 hairline(단독, 텍스트 없음) */
+.tier-newsprint .card--cover.has-masthead::after{content:"";position:absolute;left:96px;right:96px;bottom:56px;height:var(--rule-hair);background:var(--ink)} /* 커버 하단 마감 hairline — 서브헤드(하단정렬, bottom~1254)·폴리오(1/8, ~1278) 아래에 배치해 텍스트 관통 방지(구 bottom:130px는 2줄 서브헤드를 관통하는 버그) */
 .masthead{position:absolute;left:96px;right:96px;top:64px;z-index:15}
 .mh-rule{height:var(--rule-bold);background:var(--ink)}
 .mh-row{display:flex;justify-content:space-between;align-items:baseline;padding:16px 2px;font-family:${afS};font-weight:800;font-size:32px;letter-spacing:.14em;color:var(--ink)}
