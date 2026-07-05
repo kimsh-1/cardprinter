@@ -36,10 +36,12 @@ const HOOK_SECONDS = SPECS.hook_seconds?.value ?? 3;
 const CARD_MAX = SPECS.card_duration_seconds?.max ?? 4;
 
 // ── 카드 파일 수집(carousel/card-NN.html, .orig 등 제외) ──
-const cardFiles = readdirSync(carouselDir)
+let cardFiles = readdirSync(carouselDir)
   .filter((f) => /^card-\d+\.html$/.test(f))
   .sort((a, b) => parseInt(a.match(/\d+/)[0], 10) - parseInt(b.match(/\d+/)[0], 10));
 if (!cardFiles.length) { console.error(`✗ ${carouselDir}에 card-NN.html 없음`); process.exit(1); }
+// STEP1 검증 모드: 처음 두 씬만 뽑아 씬1→씬2 트랜지션이 실제로 렌더되는지 빠르게 확인(0~8s).
+if (process.env.SHORTS_STEP1) cardFiles = cardFiles.slice(0, 2);
 
 // ── CSS 스코프 유틸: :root/html,body는 씬 컨테이너 자체로, 나머지는 후손 셀렉터로 ──
 function splitTopLevel(css) {
@@ -133,9 +135,65 @@ const [firstW, firstH] = (() => {
 const topOffset = Math.round((SAFE.y[0] + SAFE.y[1] - firstH) / 2);
 const bottomBandH = V.height - topOffset - firstH;
 
+// ── 트랜지션 오버랩 폭(초). 나가는 씬의 EXIT와 들어오는 씬의 ENTER가 이 구간에서 동시에 움직여
+//    "한 번의 연속 위로-밀기"로 읽힌다. 씬 시작시간은 연속(누적 dwell) 그대로 두고 ENTER를 경계
+//    직전(Si−T)에 배치, EXIT를 (Si+Di−T)에 배치 → 경계 B에서 [B−T,B] 완전 겹침. 총길이는 안 늘어남.
+const XFER = 0.5;
+
+// ── 모션 플래너("영상 감독") — 카드 아키타입/역할에 따라 씬 트랜지션·요소 안무를 고른다.
+//    반환 {enter, exit, accents}. enter/exit는 씬 레이어(또는 커버의 .cover-block)에 적용,
+//    accents는 씬 내부 요소가 씬이 안착한 직후 순차 등장(at은 Si 기준 상대초, 음수 허용).
+//    HARD 제약: Ken Burns/전체 줌·바운스(back/elastic) 금지, CTA 외 요소 scale-in 금지.
+//    모션 = translate(slide/rise) + opacity(fade)만, 이징은 power2/3.out·sine만.
+function planScene(card, index, total) {
+  const S = `#scene-${card.idx}`;
+  const isLast = index === total - 1;
+  const accents = [];
+  let enter, exit;
+
+  // 씬 전환 철칙: opacity(autoAlpha) 크로스페이드 금지. 씬 레이어는 불투명(letterbox=--bg)이므로
+  //   opacity를 낮추면 뒤 씬이 비쳐 더블 노출(마스트헤드·폴리오·닷 중복)이 생긴다. 오직 translateY 슬라이드로만
+  //   전환한다 — 나가는 씬은 위로 완전히 빠지고(y:0→-viewport), 들어오는 불투명 씬이 아래에서 올라와 덮는다.
+  //   두 씬이 같은 방향으로 이동하며 화면을 이음새 하나로 타일링 → 겹쳐 보이는 구간이 없다(클린 push-up).
+  const SLIDE_IN = { sel: S, from: { y: V.height }, to: { y: 0, duration: 0.55, ease: "power3.out" } };
+
+  if (card.isCover) {
+    // 커버(훅, 씬1): 이전 씬이 없으므로 슬라이드 대신 콘텐츠(.cover-block)만 페이드+상승. 레이어는 t=0부터 제자리.
+    enter = { sel: `${S} .cover-block`, from: { autoAlpha: 0, y: 70 }, to: { autoAlpha: 1, y: 0, duration: 0.7, ease: "power3.out" } };
+  } else {
+    // 그 외 모든 씬 = 불투명 push-up 슬라이드 인.
+    enter = SLIDE_IN;
+  }
+
+  // 씬 안착 후 요소 안무(전부 씬 '내부' — 씬 레이어 opacity가 아니라 자식 요소만 fade/rise. 안전).
+  if (card.isCta) {
+    accents.push({ sel: `${S} .cardroot`, from: { scale: 0.94 }, to: { scale: 1, duration: 0.6, ease: "power2.out" }, at: 0.15 }); // scale은 CTA만
+  } else if (card.isPhoto) {
+    accents.push({ sel: `${S} .np-hl, ${S} .np-deck`, from: { autoAlpha: 0, y: 44 }, to: { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" }, stagger: 0.1, at: 0.4 });
+  } else if (card.isList) {
+    accents.push({ sel: `${S} .toc-row, ${S} .li-row, ${S} .blk-bullets li`, from: { autoAlpha: 0, y: 40 }, to: { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, stagger: 0.12, at: 0.4 });
+  } else if (!card.isCover) {
+    accents.push({ sel: `${S} .z1`, from: { autoAlpha: 0, y: 50 }, to: { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" }, at: 0.35 });
+  }
+
+  // 공통 요소 안무(해당 셀렉터 없으면 무해) — 커버/CTA 제외. 슬라이드 완료(≈0.05초) 후 재생되게 at 여유.
+  if (!card.isCover && !card.isCta) {
+    accents.push({ sel: `${S} .dispnum, ${S} .bignum`, from: { autoAlpha: 0, y: 46 }, to: { autoAlpha: 1, y: 0, duration: 0.55, ease: "power2.out" }, at: 0.45 });
+    accents.push({ sel: `${S} .chart-box`, from: { autoAlpha: 0, y: 50 }, to: { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }, at: 0.5 });
+    accents.push({ sel: `${S} .cutout`, from: { autoAlpha: 0, y: 32 }, to: { autoAlpha: 1, y: 0, duration: 0.5, ease: "power2.out" }, at: 0.35 });
+  }
+
+  // EXIT = push-up out(y:0→-viewport). opacity 없음(불투명 유지 → 이음새 타일링). 마지막 씬은 없음.
+  exit = isLast ? null : { sel: S, to: { y: -V.height, duration: 0.55, ease: "power3.out" } };
+  return { enter, exit, accents };
+}
+
+// GSAP vars 객체 → JS 리터럴 문자열(키 언쿼트, ease 문자열은 큐트 유지).
+const vars2js = (o) => JSON.stringify(o).replace(/"(\w+)":/g, "$1:");
+
 // ── 카드별 파싱 + 씬 조립 ──
 let t = 0;
-const clips = [], tlLines = [], scopedStyles = [], allFontFaces = [];
+const clips = [], tlLines = [], hideSets = [], scopedStyles = [], allFontFaces = [];
 const manifest = [];
 const total = cardFiles.length;
 
@@ -164,6 +222,9 @@ cardFiles.forEach((file, i) => {
   allFontFaces.push(...fontFaces);
 
   const isCover = /class="[^"]*\bcard--cover\b[^"]*"/.test(rawBody);
+  const isCta = /class="[^"]*\bcard--cta\b[^"]*"/.test(rawBody);
+  const isPhoto = /\bhas-topimg\b|\bcard--image\b|\bbg--top\b/.test(rawBody);
+  const isList = /\btoc-row\b|\bli-row\b|\bblk-bullets\b/.test(rawBody);
   const len = textLenOf(rawBody);
   const rawDur = len / DWELL.cps + DWELL.add_seconds;
   // ms 정밀도로 먼저 반올림한 뒤 누적 — start/dur를 각각 toFixed(3)로 표시할 때
@@ -185,7 +246,11 @@ cardFiles.forEach((file, i) => {
     return `<span class="dot${active ? " active" : ""}" style="background:${active ? acc : ink};opacity:${active ? 1 : 0.32};width:${active ? 26 : 14}px"></span>`;
   }).join("");
 
-  clips.push(`<div class="clip" id="scene-${idx}" data-start="${start.toFixed(3)}" data-duration="${dur.toFixed(3)}" data-track-index="0">
+  // 단일 컴포지션: 씬 = full-bleed 레이어(position:absolute;inset:0). data-start/data-duration 없음
+  //   → HyperFrames는 data-start 있는 요소만 시간창으로 가리므로(querySelectorAll("[data-start]")),
+  //   씬 레이어는 절대 하드컷되지 않고 GSAP 마스터 타임라인이 가시성·위치·트랜지션을 전담한다.
+  //   cardroot+body클래스 래퍼는 티어 레이아웃(사진 상단·본문 하단 계층)을 살리는 필수 요소라 유지.
+  clips.push(`<div class="scene" id="scene-${idx}">
   <div class="letterbox" style="background:${bg}"></div>
   <div class="wordmark" style="height:${topOffset}px;color:${ink}">${decodeEntities(copy.series_wordmark || "")}</div>
   <div id="cardbox-${idx}" class="${scopeClass}" style="top:${topOffset}px">
@@ -194,23 +259,29 @@ cardFiles.forEach((file, i) => {
   <div class="progress" style="top:${topOffset + firstH + 40}px">${dots}</div>
 </div>`);
 
-  // ── 등장 모션 v3: 확대(Ken Burns)·바운스·가로쓸림 전면 제거. 전부 "아래→위 상승+페이드"로 통일.
-  //    카드 전체 스케일 애니(구 scale 1→1.045)는 진동/줌의 주범이라 삭제 — 정적 홀드가 안정·가독 우선.
-  //    scale/back.out 이징도 제거(오버슈트=진동). ease는 전부 power2/3.out(부드러운 감속, 오버슈트 없음).
-  const entranceDur = Math.min(HOOK_SECONDS, dur * 0.8);
-  if (isCover) {
-    tlLines.push(`tl.from("#scene-${idx} .cover-block",{opacity:0,y:64,duration:${entranceDur.toFixed(3)},ease:"power3.out"},${start.toFixed(3)});`);
-  } else {
-    tlLines.push(`tl.from("#scene-${idx} .z1",{opacity:0,y:50,duration:0.6,ease:"power2.out"},${(start + 0.1).toFixed(3)});`);
+  // ── 모션 플래너 적용: 씬별 아키타입에 맞는 ENTER/EXIT/accents를 절대시간으로 배치.
+  const card = { idx, isCover, isCta, isPhoto, isList };
+  const { enter, exit, accents } = planScene(card, i, total);
+
+  // 커버 외 모든 씬 레이어는 초기 숨김(GSAP가 ENTER로 드러냄).
+  if (!isCover) hideSets.push(`#scene-${idx}`);
+
+  // ENTER: 커버는 t=0, 나머지는 경계 직전(Si−XFER)에 배치해 이전 씬 EXIT와 겹침 → 연속 push.
+  const enterAt = i === 0 ? 0 : Math.max(0, start - XFER);
+  tlLines.push(`tl.fromTo("${enter.sel}",${vars2js(enter.from)},${vars2js(enter.to)},${enterAt.toFixed(3)});`);
+
+  // accents: 씬 내부 요소 안무(at은 Si 기준 상대초; CTA scale은 at=−XFER로 ENTER와 동기).
+  for (const a of accents) {
+    const to = a.stagger != null ? { ...a.to, stagger: a.stagger } : a.to;
+    const at = Math.max(0, start + a.at);
+    tlLines.push(`tl.fromTo("${a.sel}",${vars2js(a.from)},${vars2js(to)},${at.toFixed(3)});`);
   }
-  // 목차·리스트·불릿 — 항목이 하나씩 순차 상승(stagger). .toc-row 포함(목차가 한꺼번에 뜨던 문제 해결).
-  tlLines.push(`tl.from("#scene-${idx} .toc-row, #scene-${idx} .li-row, #scene-${idx} .blk-bullets li, #scene-${idx} .blk-icon-cell",{opacity:0,y:38,duration:0.5,stagger:0.16,ease:"power2.out"},${(start + 0.35).toFixed(3)});`);
-  // 큰 숫자 — 상승만(줌·바운스 제거).
-  tlLines.push(`tl.from("#scene-${idx} .dispnum, #scene-${idx} .bignum",{opacity:0,y:46,duration:0.55,ease:"power2.out"},${(start + 0.25).toFixed(3)});`);
-  // 차트 — 아래에서 부드럽게 상승(구 가로 scaleX 쓸림 제거). 막대 개별 stagger는 SVG 구조 의존이라 컨테이너 단위로 통일.
-  tlLines.push(`tl.from("#scene-${idx} .chart-box",{opacity:0,y:50,duration:0.6,ease:"power2.out"},${(start + 0.3).toFixed(3)});`);
-  // 컷아웃 인물 — 상승만(줌·바운스 제거).
-  tlLines.push(`tl.from("#scene-${idx} .cutout",{opacity:0,y:32,duration:0.5,ease:"power2.out"},${(start + 0.2).toFixed(3)});`);
+
+  // EXIT: (Si+Di−XFER)에 push-up out. 다음 씬 ENTER와 같은 시점에서 완전 겹침.
+  if (exit) {
+    const exitAt = Math.max(0, start + dur - XFER);
+    tlLines.push(`tl.to("${exit.sel}",${vars2js(exit.to)},${exitAt.toFixed(3)});`);
+  }
 });
 
 const totalDur = Math.round(t * 100) / 100;
@@ -228,7 +299,7 @@ const htmlOut = `<!doctype html><html lang="ko"><head><meta charset="UTF-8">
 ${uniqFonts.join("\n")}
 *{margin:0;box-sizing:border-box}
 html,body{width:${V.width}px;height:${V.height}px;overflow:hidden;background:#000;font-family:'Pretendard',sans-serif}
-.clip{position:absolute;inset:0;overflow:hidden}
+.scene{position:absolute;inset:0;overflow:hidden;will-change:transform,opacity}
 .letterbox{position:absolute;inset:0}
 .wordmark{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;
   font-family:'Pretendard',sans-serif;font-weight:700;font-size:34px;letter-spacing:.08em;opacity:.82}
@@ -243,6 +314,7 @@ ${clips.join("\n")}
 <script type="application/json" id="scene-manifest">${manifestJson}</script>
 <script>
 window.__timelines=window.__timelines||{};
+gsap.set([${hideSets.map((s) => `"${s}"`).join(",")}],{y:${V.height}});
 const tl=gsap.timeline({paused:true});
 ${tlLines.join("\n")}
 window.__timelines["main"]=tl;
